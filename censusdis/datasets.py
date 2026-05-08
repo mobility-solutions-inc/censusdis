@@ -622,6 +622,8 @@ TIMESERIES_GOVS = "timeseries/govs"
 
 TIMESERIES_GOVSEMP = "timeseries/govsemp"
 
+TIMESERIES_GOVSSCHFIN = "timeseries/govsschfin"
+
 TIMESERIES_GOVSSTATEFIN = "timeseries/govsstatefin"
 
 TIMESERIES_GOVSSTATETAX = "timeseries/govsstatetax"
@@ -965,6 +967,7 @@ DATASET_REFERENCE_URLS = {
     TIMESERIES_EITS: "http://api.census.gov/data/timeseries/eits/vip",
     TIMESERIES_GOVS: "http://api.census.gov/data/timeseries/govs",
     TIMESERIES_GOVSEMP: "http://api.census.gov/data/timeseries/govsemp",
+    TIMESERIES_GOVSSCHFIN: "http://api.census.gov/data/timeseries/govsschfin",
     TIMESERIES_GOVSSTATEFIN: "http://api.census.gov/data/timeseries/govsstatefin",
     TIMESERIES_GOVSSTATETAX: "http://api.census.gov/data/timeseries/govsstatetax",
     TIMESERIES_HEALTHINS: "http://api.census.gov/data/timeseries/healthins/sahie",
