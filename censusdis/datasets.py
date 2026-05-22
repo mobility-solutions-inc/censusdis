@@ -622,6 +622,8 @@ TIMESERIES_GOVS = "timeseries/govs"
 
 TIMESERIES_GOVSEMP = "timeseries/govsemp"
 
+TIMESERIES_GOVSPENSION = "timeseries/govspension"
+
 TIMESERIES_GOVSSCHFIN = "timeseries/govsschfin"
 
 TIMESERIES_GOVSSTATEFIN = "timeseries/govsstatefin"
@@ -713,7 +715,7 @@ DATASET_REFERENCE_URLS = {
     CFSTEMP: "http://api.census.gov/data/2022/cfstemp",
     CPS_ARTS_FEB: "http://api.census.gov/data/2020/cps/arts/feb",
     CPS_ASEC_MAR: "http://api.census.gov/data/2025/cps/asec/mar",
-    CPS_BASIC_APR: "http://api.census.gov/data/2025/cps/basic/apr",
+    CPS_BASIC_APR: "http://api.census.gov/data/2026/cps/basic/apr",
     CPS_BASIC_AUG: "http://api.census.gov/data/2025/cps/basic/aug",
     CPS_BASIC_DEC: "http://api.census.gov/data/2025/cps/basic/dec",
     CPS_BASIC_FEB: "http://api.census.gov/data/2026/cps/basic/feb",
@@ -757,14 +759,14 @@ DATASET_REFERENCE_URLS = {
     CPS_TOBACCO_SEP: "http://api.census.gov/data/2022/cps/tobacco/sep",
     CPS_UNBANK_JAN: "http://api.census.gov/data/2009/cps/unbank/jan",
     CPS_UNBANK_JUN: "http://api.census.gov/data/2023/cps/unbank/jun",
-    CPS_VETS_AUG: "http://api.census.gov/data/2024/cps/vets/aug",
+    CPS_VETS_AUG: "http://api.census.gov/data/2025/cps/vets/aug",
     CPS_VETS_JUL: "http://api.census.gov/data/2010/cps/vets/jul",
     CPS_VETS_SEP: "http://api.census.gov/data/1999/cps/vets/sep",
     CPS_VOLUNTEER_SEP: "http://api.census.gov/data/2023/cps/volunteer/sep",
     CPS_VOTING_NOV: "http://api.census.gov/data/2024/cps/voting/nov",
     CPS_WORKSCHED_MAY: "http://api.census.gov/data/2004/cps/worksched/may",
     CRE: "http://api.census.gov/data/2024/cre",
-    CREPUERTORICO: "http://api.census.gov/data/2023/crepuertorico",
+    CREPUERTORICO: "http://api.census.gov/data/2024/crepuertorico",
     DECENNIAL_AIAN: "http://api.census.gov/data/2010/dec/aian",
     DECENNIAL_AIANPROFILE: "http://api.census.gov/data/2000/dec/aianprofile",
     DECENNIAL_AS: "http://api.census.gov/data/2010/dec/as",
@@ -967,6 +969,7 @@ DATASET_REFERENCE_URLS = {
     TIMESERIES_EITS: "http://api.census.gov/data/timeseries/eits/vip",
     TIMESERIES_GOVS: "http://api.census.gov/data/timeseries/govs",
     TIMESERIES_GOVSEMP: "http://api.census.gov/data/timeseries/govsemp",
+    TIMESERIES_GOVSPENSION: "http://api.census.gov/data/timeseries/govspension",
     TIMESERIES_GOVSSCHFIN: "http://api.census.gov/data/timeseries/govsschfin",
     TIMESERIES_GOVSSTATEFIN: "http://api.census.gov/data/timeseries/govsstatefin",
     TIMESERIES_GOVSSTATETAX: "http://api.census.gov/data/timeseries/govsstatetax",
