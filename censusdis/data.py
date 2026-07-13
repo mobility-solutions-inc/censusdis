@@ -45,7 +45,6 @@ from censusdis.states import ABBREVIATIONS_FROM_IDS
 
 import censusdis.impl.fetch
 
-
 logger = getLogger(__name__)
 
 

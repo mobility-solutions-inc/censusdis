@@ -1,5 +1,6 @@
 # Copyright (c) 2023 Darren Erik Vengroff
 """Test LODES data."""
+
 import unittest
 import sys
 

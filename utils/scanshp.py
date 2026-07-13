@@ -23,7 +23,6 @@ from censusdis.impl.us_census_shapefiles import (
     _geo_query_from_data_query_inner_geo_items,
 )
 
-
 logger = getLogger(__name__)
 
 
