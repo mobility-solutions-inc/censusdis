@@ -6,6 +6,7 @@ Most of the functionality can be unit tested elsewhere or with mocks, but
 these tests actually call the census API itself to cover the bits of code
 immediately around those calls.
 """
+
 import os
 import unittest
 
@@ -24,7 +25,6 @@ from censusdis import states
 import censusdis.counties.new_jersey
 from censusdis.datasets import ACS3, ACS5
 from censusdis.states import WA, NY, NJ, CT, PA
-
 
 # Set to DEBUG logging to help diagnose test issues.
 # Set to WARNING for normal low-volume output.

@@ -1,5 +1,6 @@
 # Copyright (c) 2023 Darren Erik Vengroff
 """Main module for the command line interface to censusdis."""
+
 from typing import Optional
 import argparse
 import logging

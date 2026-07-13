@@ -26,7 +26,6 @@ import censusdis.datasets
 
 import re
 
-
 logger = getLogger(__name__)
 
 

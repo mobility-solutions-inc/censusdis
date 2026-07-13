@@ -1,5 +1,6 @@
 # Copyright (c) 2023 Darren Erik Vengroff
 """Test the variable cache."""
+
 import unittest
 from typing import Any, Dict, Iterable, List, Optional
 
