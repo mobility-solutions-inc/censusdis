@@ -9,6 +9,7 @@ immediately around those calls.
 This file is split off from test_integration.py so that we can do more testing
 in parallel.
 """
+
 import unittest
 from pandas.testing import assert_frame_equal
 

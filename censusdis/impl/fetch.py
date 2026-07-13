@@ -1,5 +1,6 @@
 # Copyright (c) 2022 Darren Erik Vengroff
 """Utilities for loading census data."""
+
 from logging import getLogger
 from typing import Any, Mapping, Optional, Union, Tuple
 

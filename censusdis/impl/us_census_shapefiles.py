@@ -18,7 +18,6 @@ from censusdis import CensusApiException, maps as cmap
 from censusdis.impl.geometry import drop_slivers_from_gdf
 from censusdis.impl.varsource.base import VintageType
 
-
 logger = getLogger(__name__)
 
 

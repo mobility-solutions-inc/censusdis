@@ -1,5 +1,6 @@
 # Copyright (c) 2023 Darren Erik Vengroff
 """Test plot specifications for the CLI."""
+
 import unittest
 
 from typing import Any
