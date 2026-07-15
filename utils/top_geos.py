@@ -44,7 +44,7 @@ def generate_for_geo(geo: str, short_geo: str):
     test_file = Path(__file__).parent.parent / "tests" / f"test_{short_geo}.py"
     with open(test_file, "w") as tf:
         tf.write(f"""# Copyright (c) 2023 Darren Erik Vengroff
-\"\"\"Tests for {geo.replace('_', ' ').title()} symbols.\"\"\"
+\"\"\"Tests for {geo.replace("_", " ").title()} symbols.\"\"\"
 
 import unittest
 
@@ -52,7 +52,7 @@ import censusdis.{short_geo}
 
 
 class {short_geo.title()}TestCase(unittest.TestCase):
-    \"\"\"Tests for {geo.replace('_', ' ').title()} symbols.\"\"\"
+    \"\"\"Tests for {geo.replace("_", " ").title()} symbols.\"\"\"
 
     def test_{geo}s(self):
         \"\"\"Test {geo}.\"\"\"

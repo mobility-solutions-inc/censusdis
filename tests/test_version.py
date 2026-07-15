@@ -1,8 +1,8 @@
 # Copyright (c) 2022-2023 Darren Erik Vengroff
 """Test censusdis.version."""
 
-import unittest
 import re
+import unittest
 
 import censusdis
 

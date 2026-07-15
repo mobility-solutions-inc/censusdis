@@ -8,14 +8,14 @@ import censusdis.states
 from censusdis.cli.yamlspec import (
     CensusGroup,
     DataSpec,
-    VariableSpec,
     VariableList,
+    VariableSpec,
     VariableSpecCollection,
 )
+from censusdis.counties.new_jersey import ESSEX, HUDSON
 from censusdis.data import ContainedWithin
 from censusdis.datasets import ACS5
 from censusdis.states import NJ, NY, PA
-from censusdis.counties.new_jersey import ESSEX, HUDSON
 
 
 class VariableListTestCase(unittest.TestCase):

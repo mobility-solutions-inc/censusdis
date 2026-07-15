@@ -4,10 +4,10 @@
 import unittest
 from typing import Any, Dict, Iterable, List, Optional
 
+from pandas.testing import assert_frame_equal
+
 from censusdis.impl.varcache import VariableCache
 from censusdis.impl.varsource.base import VariableSource
-
-from pandas.testing import assert_frame_equal
 
 
 class VariableCacheTestCase(unittest.TestCase):
