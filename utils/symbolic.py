@@ -8,8 +8,8 @@ and their respective symbolic names for
 documentation purposes.
 """
 
-from datetime import datetime
 import argparse
+from datetime import datetime
 from pathlib import Path
 
 import censusdis.data as ced
