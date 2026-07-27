@@ -1,8 +1,10 @@
 # Copyright (c) 2023 Darren Erik Vengroff
 """Test LODES data."""
 
+import gzip
 import sys
 import unittest
+from unittest import mock
 
 import censusdis.data as ced
 from censusdis.counties.new_jersey import ESSEX
@@ -13,6 +15,34 @@ from censusdis.datasets import (
     LODES_WAC_S000_JT05,
 )
 from censusdis.states import NJ, NY
+
+
+class LodesUnitTestCase(unittest.TestCase):
+    """Test LODES transformations without downloading remote data."""
+
+    def test_default_variables_exclude_string_geographies(self):
+        """Select only numeric measures when download variables are omitted."""
+        csv_content = (
+            b"w_geocode,C000,createdate\n"
+            b"340130001001001,2,20200101\n"
+            b"340130001001002,3,20200101\n"
+        )
+        response = mock.Mock(
+            status_code=200,
+            reason="OK",
+            content=gzip.compress(csv_content),
+        )
+
+        with mock.patch("censusdis.data.requests.get", return_value=response):
+            df_lodes = ced.download_lodes(
+                LODES_WAC_S000_JT05,
+                2020,
+                state=NJ,
+            )
+
+        self.assertEqual(["STATE", "C000"], list(df_lodes.columns))
+        self.assertEqual(NJ, df_lodes.loc[0, "STATE"])
+        self.assertEqual(5, df_lodes.loc[0, "C000"])
 
 
 @unittest.skipIf(

@@ -898,7 +898,7 @@ class VariableCache:
             The typical reason we want leaves is because that gives us a set
             of variables representing counts that do not overlap and add up
             to the total. We can use these directly in diversity and integration
-            calculations using the `divintseg` package.
+            calculations using the `censusdis.divintseg` module.
         """
         tree = self.group_tree(dataset, year, name)
 

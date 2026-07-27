@@ -33,7 +33,7 @@ jobs:
       #----------------------------------------------
       #          run linters
       #----------------------------------------------
-      - run: python -m pip install flake8 pylint ruff
+      - run: python -m pip install flake8 pylint ruff==0.15.21
       - run: |
           flake8 --show-source .
       - run: |
