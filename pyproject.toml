@@ -75,36 +75,41 @@ Repository = "https://github.com/vengroff/censusdis"
 [project.scripts]
 censusdis = "censusdis.cli.cli:main"
 
-[tool.poetry]
-requires-poetry = ">=2.4.1,<3.0.0"
-
-[tool.poetry.group.test.dependencies]
-pytest = ">=7.1.3,<10.0.0"
-coverage = {extras = ["toml"], version = "^6.5.0"}
-pytest-cov = "^3.0.0"
-nbmake = "^1.3.5"
-scikit-image = "^0.24.0"
-
-[tool.poetry.group.lint.dependencies]
-ruff = "^0.15.21"
-flake8 = "^7.0.0"
-pylint = "^2.15.2"
-mypy = "^0.971"
-types-requests = "^2.28.10"
-
-[tool.poetry.group.dist.dependencies]
-genbadge = {extras = ["all"], version = "^1.1.0"}
-
-
-[tool.poetry.group.dev.dependencies]
-notebook = "^7.2.2"
+[dependency-groups]
+test = [
+    "coverage[toml]>=6.5.0,<7.0.0",
+    "nbmake>=1.3.5,<2.0.0",
+    "pytest>=7.1.3,<10.0.0",
+    "pytest-cov>=3.0.0,<4.0.0",
+    "scikit-image>=0.24.0,<0.25.0",
+]
+lint = [
+    "flake8>=7.0.0,<8.0.0",
+    "mypy>=0.971,<1.0.0",
+    "pylint>=2.15.2,<3.0.0",
+    "ruff>=0.15.21,<0.16.0",
+    "types-requests>=2.28.10,<3.0.0",
+]
+dist = [
+    "genbadge[all]>=1.1.0,<2.0.0",
+]
+dev = [
+    { include-group = "dist" },
+    { include-group = "lint" },
+    { include-group = "test" },
+    "notebook>=7.2.2,<8.0.0",
+]
 
 [tool.coverage.report]
 omit = ["tests/*"]
 
 [build-system]
-requires = ["poetry-core>=2.4.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.11.32,<0.12"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "censusdis"
+module-root = ""
 
 [tool.ruff.lint]
 select = ["D", "I"]

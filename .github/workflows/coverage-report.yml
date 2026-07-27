@@ -37,45 +37,20 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: 3.12
-      #----------------------------------------------
-      #      install & configure poetry
-      #----------------------------------------------
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
+      - name: Set up uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
         with:
-          version: 2.4.1
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-          installer-parallel: true
-
-      #----------------------------------------------
-      #       load cached venv if cache exists
-      #----------------------------------------------
-      - name: Load cached venv
-        id: cached-poetry-dependencies
-        uses: actions/cache@v6
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
-      #----------------------------------------------
-      # install dependencies if cache does not exist
-      #----------------------------------------------
+          version: 0.11.32
+          enable-cache: true
+          cache-dependency-glob: uv.lock
       - name: Install dependencies
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: poetry install --no-interaction --no-root
-      #----------------------------------------------
-      # install your root project, if required
-      #----------------------------------------------
-      - name: Install library
-        run: poetry install --no-interaction
+        run: uv sync --locked --no-default-groups --group test --group dist
       #----------------------------------------------
       #              run test suite
       #----------------------------------------------
       - name: Run tests with coverage
         id: runTests
-        run: |
-          source .venv/bin/activate
-          coverage run -m pytest --junitxml=reports/junit/junit.xml
+        run: uv run --no-sync coverage run -m pytest --junitxml=reports/junit/junit.xml
       #----------------------------------------------
       #              archive test artifacts
       #----------------------------------------------
@@ -91,12 +66,11 @@ jobs:
       #----------------------------------------------
       - name: Generate coverage reports and badges
         run: |
-          source .venv/bin/activate
-          coverage report 
-          coverage xml -o ./reports/coverage/coverage.xml
-          coverage html -d ./reports/coverage 
-          genbadge coverage -n coverage -o ./reports/coverage/coverage-badge.svg
-          genbadge tests --name tests -i reports/junit/junit.xml -o ./reports/junit/tests-badge.svg
+          uv run --no-sync coverage report
+          uv run --no-sync coverage xml -o ./reports/coverage/coverage.xml
+          uv run --no-sync coverage html -d ./reports/coverage
+          uv run --no-sync genbadge coverage -n coverage -o ./reports/coverage/coverage-badge.svg
+          uv run --no-sync genbadge tests --name tests -i reports/junit/junit.xml -o ./reports/junit/tests-badge.svg
       #----------------------------------------------
       #              commit coverage
       #----------------------------------------------
