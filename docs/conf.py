@@ -57,11 +57,12 @@ def get_pyproject() -> MutableMapping:
 
 
 pyproject = get_pyproject()
+project_metadata = pyproject["project"]
 
-project = pyproject["tool"]["poetry"]["name"]
-author = ",".join(pyproject["tool"]["poetry"]["authors"])
+project = project_metadata["name"]
+author = ", ".join(author["name"] for author in project_metadata["authors"])
 copyright = f"2022-24, {author}"
-release = pyproject["tool"]["poetry"]["version"]
+release = project_metadata["version"]
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

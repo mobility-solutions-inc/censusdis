@@ -59,16 +59,13 @@ from censusdis import states
 df_median_income = ced.download(
     # Data set: American Community Survey 5-Year
     dataset=ACS5,
-    
     # Vintage: 2022
-    vintage=2022, 
-    
+    vintage=2022,
     # Variable: median household income
-    download_variables=['NAME', 'B19013_001E'], 
-    
+    download_variables=["NAME", "B19013_001E"],
     # Geography: All counties in New Jersey.
     state=states.NJ,
-    county='*'
+    county="*",
 )
 ```
 
@@ -122,8 +119,8 @@ of datasets and years, likely including many that don't
 exist as of time of this writing. It also integrates
 downloading and merging the geometry of geographic 
 geometries to make plotting data and derived metrics simple
-and easy. Finally, it interacts with the `divintseg`
-package to compute diversity and integration metrics.
+and easy. Finally, its `censusdis.divintseg` module computes
+diversity and integration metrics.
 
 The design goal of `censusdis` are discussed in more
 detail in [design-goals.md](../design-goals.md).
@@ -166,7 +163,7 @@ gdf_bg = ced.download(
     ["NAME", MEDIAN_HOUSEHOLD_INCOME_VARIABLE],
     state=STATE_GA,
     block_group="*",
-    with_geometry=True
+    with_geometry=True,
 )
 ```
 
@@ -224,10 +221,9 @@ The demo notebooks include
 
 ## Diversity and Integration Metrics
 
-Diversity and integration metrics from the `divintseg` package are 
-demonstrated in some notebooks.
+Diversity and integration metrics from the bundled `censusdis.divintseg`
+module are demonstrated in some notebooks.
 
 For more information on these metrics
-see the [divintseg](https://github.com/vengroff/divintseg/) 
+see the original [divintseg](https://github.com/censusdis/divintseg/)
 project.
-

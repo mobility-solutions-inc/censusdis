@@ -2,6 +2,7 @@
 """Utilities for loading census data."""
 
 from logging import getLogger
+from time import sleep
 from typing import Any, Mapping, Optional, Tuple, Union
 
 import pandas as pd
@@ -10,6 +11,10 @@ import requests
 from censusdis.impl.exceptions import CensusApiException
 
 logger = getLogger(__name__)
+
+_DEFAULT_DATA_TIMEOUT_SECONDS = 120
+_DATA_DOWNLOAD_RETRIES = 3
+_RETRYABLE_DATA_STATUS_CODES = frozenset({429, 500, 502, 503, 504})
 
 
 class _CertificateManager:
@@ -161,9 +166,38 @@ you need not worry about this. If you would, then use the values you would pass 
 
 def json_from_url(url: str, params: Optional[Mapping[str, str]] = None) -> Any:
     """Get json from a URL."""
-    request = requests.get(
-        url, params=params, cert=certificates.data_cert, verify=certificates.data_verify
-    )
+    for attempt in range(_DATA_DOWNLOAD_RETRIES + 1):
+        try:
+            request = requests.get(
+                url,
+                params=params,
+                cert=certificates.data_cert,
+                verify=certificates.data_verify,
+                timeout=_DEFAULT_DATA_TIMEOUT_SECONDS,
+            )
+        except (
+            requests.exceptions.ConnectionError,
+            requests.exceptions.Timeout,
+        ) as exc:
+            if attempt == _DATA_DOWNLOAD_RETRIES:
+                raise
+            retry_reason = str(exc)
+        else:
+            if (
+                request.status_code not in _RETRYABLE_DATA_STATUS_CODES
+                or attempt == _DATA_DOWNLOAD_RETRIES
+            ):
+                break
+            retry_reason = f"HTTP {request.status_code}"
+
+        backoff_seconds = 2**attempt
+        logger.warning(
+            "Census API request to %s failed (%s); retrying in %d seconds.",
+            url,
+            retry_reason,
+            backoff_seconds,
+        )
+        sleep(backoff_seconds)
 
     if request.status_code == 200:
         try:
@@ -171,10 +205,11 @@ def json_from_url(url: str, params: Optional[Mapping[str, str]] = None) -> Any:
             return parsed_json
         except requests.exceptions.JSONDecodeError:
             logger.debug(f"API call got 200 with unparseable JSON:\n{request.text}")
-            if (
-                "You included a key with this request, however, it is not valid."
-                in request.text
-            ):
+            invalid_key_markers = (
+                "You included a key with this request, however, it is not valid.",
+                "<title>Invalid Key</title>",
+            )
+            if any(marker in request.text for marker in invalid_key_markers):
                 message = f"Census API request to {request.url} failed because your key is invalid."
             else:
                 message = f"Census API request to {request.url} failed. Unable to parse returned JSON:\n{request.text}"

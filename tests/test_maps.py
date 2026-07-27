@@ -7,9 +7,11 @@ import unittest
 from pathlib import Path
 from shutil import rmtree
 from typing import Any
+from unittest.mock import Mock, call, patch
 
 import geopandas as gpd
 import matplotlib.pyplot as plt
+import requests
 import skimage.io
 from pyproj.crs import CRS
 from shapely.geometry import Polygon
@@ -90,6 +92,33 @@ class ShapeReaderTestCase(unittest.TestCase):
             "https://www2.census.gov/geo/tiger/TIGER2009/01_ALABAMA", base_url
         )
         self.assertEqual("tl_2009_01_tract00", name)
+
+
+class ShapefileDownloadTestCase(unittest.TestCase):
+    """Test resilient shapefile downloads."""
+
+    @patch("censusdis.maps.sleep")
+    @patch("censusdis.maps.requests.get")
+    def test_retries_timeouts_with_exponential_backoff(self, requests_get, sleep):
+        """Retry three times with exponential backoff before succeeding."""
+        response = Mock()
+        requests_get.side_effect = [
+            requests.exceptions.ReadTimeout("first timeout"),
+            requests.exceptions.ReadTimeout("second timeout"),
+            requests.exceptions.ReadTimeout("third timeout"),
+            response,
+        ]
+
+        actual_response = cmap._download_with_retries(
+            "https://www2.census.gov/example.zip",
+            timeout=120,
+            cert=None,
+            verify=True,
+        )
+
+        self.assertIs(response, actual_response)
+        self.assertEqual(4, requests_get.call_count)
+        sleep.assert_has_calls([call(1), call(2), call(4)])
 
 
 class GdfCrsBoundsTestCase(unittest.TestCase):

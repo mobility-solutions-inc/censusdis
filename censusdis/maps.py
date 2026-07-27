@@ -10,6 +10,7 @@ import importlib.resources
 import shutil
 from logging import getLogger
 from pathlib import Path
+from time import sleep
 from typing import Any, Dict, Optional, Tuple, Union
 from zipfile import BadZipFile, ZipFile
 
@@ -30,9 +31,56 @@ from censusdis.states import AK, HI, NAMES_FROM_IDS, PR
 
 logger = getLogger(__name__)
 
+_DEFAULT_SHAPEFILE_TIMEOUT_SECONDS = 120
+_SHAPEFILE_DOWNLOAD_RETRIES = 3
+_RETRYABLE_SHAPEFILE_STATUS_CODES = frozenset({429, 500, 502, 503, 504})
+
 
 class MapException(CensusApiException):
     """An exception generated from `censusdis.maps` code."""
+
+
+def _download_with_retries(
+    url: str,
+    *,
+    timeout: int,
+    cert,
+    verify,
+) -> requests.Response:
+    """Download a shapefile, retrying transient Census server failures."""
+    for attempt in range(_SHAPEFILE_DOWNLOAD_RETRIES + 1):
+        try:
+            response = requests.get(
+                url,
+                timeout=timeout,
+                cert=cert,
+                verify=verify,
+            )
+        except (
+            requests.exceptions.ConnectionError,
+            requests.exceptions.Timeout,
+        ) as exc:
+            if attempt == _SHAPEFILE_DOWNLOAD_RETRIES:
+                raise
+            retry_reason = str(exc)
+        else:
+            if (
+                response.status_code not in _RETRYABLE_SHAPEFILE_STATUS_CODES
+                or attempt == _SHAPEFILE_DOWNLOAD_RETRIES
+            ):
+                return response
+            retry_reason = f"HTTP {response.status_code}"
+
+        backoff_seconds = 2**attempt
+        logger.warning(
+            "Shapefile download from %s failed (%s); retrying in %d seconds.",
+            url,
+            retry_reason,
+            backoff_seconds,
+        )
+        sleep(backoff_seconds)
+
+    raise RuntimeError("Shapefile download retry loop exited unexpectedly.")
 
 
 class ShapeReader:
@@ -239,7 +287,12 @@ class ShapeReader:
         return gdf
 
     def read_shapefile(
-        self, shapefile_scope: str, geography: str, crs=None, *, timeout: int = 30
+        self,
+        shapefile_scope: str,
+        geography: str,
+        crs=None,
+        *,
+        timeout: int = _DEFAULT_SHAPEFILE_TIMEOUT_SECONDS,
     ):
         """
         Read the geometries of geographies.
@@ -307,7 +360,7 @@ class ShapeReader:
         resolution: str = "500k",
         crs=None,
         *,
-        timeout: int = 30,
+        timeout: int = _DEFAULT_SHAPEFILE_TIMEOUT_SECONDS,
     ) -> gpd.GeoDataFrame:
         """
         Read the cartographic boundaries of a given geography.
@@ -383,7 +436,7 @@ class ShapeReader:
         resolution: str = "500k",
         crs=None,
         *,
-        timeout: int = 60,
+        timeout: int = _DEFAULT_SHAPEFILE_TIMEOUT_SECONDS,
     ) -> gpd.GeoDataFrame:
         """
         Try to retrieve CB file.
@@ -469,7 +522,7 @@ class ShapeReader:
         zip_url = f"{base_url}/{name}.zip"
 
         # Fetch the zip file and write it.
-        response = requests.get(
+        response = _download_with_retries(
             zip_url,
             timeout=timeout,
             cert=certificates.map_cert,
