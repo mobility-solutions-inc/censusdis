@@ -31,6 +31,7 @@ jobs:
     env:
       US_CENSUS_API_KEY: ${{ secrets.US_CENSUS_API_KEY }}
     strategy:
+      max-parallel: 4
       matrix:
         test: ${{ fromJson(needs.list-tests.outputs.matrix) }}
       fail-fast: false
