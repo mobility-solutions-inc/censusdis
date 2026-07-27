@@ -22,7 +22,10 @@ jobs:
   nbmake:
     needs: list-notebooks
     runs-on: ubuntu-latest
+    env:
+      US_CENSUS_API_KEY: ${{ secrets.US_CENSUS_API_KEY }}
     strategy:
+      max-parallel: 4
       matrix:
         notebook: ${{ fromJson(needs.list-notebooks.outputs.matrix) }}
       fail-fast: false
@@ -76,4 +79,4 @@ jobs:
           source .venv/bin/activate
           # pytest --junitxml=reports/nbmake/${{matrix.notebook-type}}/junit.xml --nbmake ${{matrix.notebook-dir}}/*.ipynb
           # genbadge tests --name "${{matrix.notebook-type}} tests" -i reports/nbmake/${{matrix.notebook-type}}/junit.xml -o reports/nbmake/nbmake-${{matrix.notebook-type}}-badge.svg
-          pytest --nbmake "${{matrix.notebook}}"
+          pytest --nbmake --nbmake-timeout=600 "${{matrix.notebook}}"

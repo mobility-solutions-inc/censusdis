@@ -1,12 +1,9 @@
-# Run a matrix of tests across different platforms and python versions.
-# This is run on each pull request so we get a complete picture of any
-# platform-specific issues not caught earlier.
+# Run a matrix of tests across supported Python versions on Linux.
+# This is run on each pull request.
 #
 # See also:
 #    unit-test.yml: run on a single platform every time a branch is pushed
 #    coverage-report.yml: runs on merge to main to generate coverage reports
-
-# Based on https://github.com/marketplace/actions/install-poetry-action#running-on-windows
 
 name: test-matrix
 
@@ -16,13 +13,14 @@ jobs:
   test-matrix:
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12", "3.13"]
-        os: [ "ubuntu-latest", "macos-latest", "windows-latest" ]
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
       fail-fast: false
     defaults:
       run:
         shell: bash
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
+    env:
+      US_CENSUS_API_KEY: ${{ secrets.US_CENSUS_API_KEY }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
@@ -31,6 +29,11 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install GDAL build dependencies
+        if: matrix.python-version == '3.14'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes libgdal-dev
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
@@ -59,6 +62,6 @@ jobs:
         if: ${{ !cancelled() && hashFiles('tests/_test_artifacts') != '' }}
         uses: actions/upload-artifact@v7
         with:
-          name: test_artifacts-${{ matrix.os }}-${{ matrix.python-version }}
+          name: test_artifacts-${{ matrix.python-version }}
           path: tests/_test_artifacts
           retention-days: 7

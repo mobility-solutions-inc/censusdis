@@ -1,5 +1,8 @@
 # Based on https://github.com/github/gitignore/blob/main/Python.gitignore
 
+# macOS
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

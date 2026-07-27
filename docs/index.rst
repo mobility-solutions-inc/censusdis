@@ -47,11 +47,10 @@ as little effort as possible. That way you can concentrate
 on your research and modeling, not on wrangling and
 manipulating raw census data.
 
-The related
-`divintseg <https://github.com/vengroff/divintseg>`__
-project provides utilities for computing diversity,
-integration, and segregation metrics from US Census and
-other data.
+The bundled :mod:`censusdis.divintseg` module provides utilities for
+computing diversity, integration, and segregation metrics from US Census
+and other data. It was incorporated from the original
+`divintseg <https://github.com/censusdis/divintseg>`__ project.
 
 Installation and Getting Started
 --------------------------------
