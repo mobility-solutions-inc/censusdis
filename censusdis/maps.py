@@ -878,9 +878,10 @@ def _gdf_crs_bounds() -> gpd.GeoDataFrame:
     global __gdf_crs_bounds
 
     if __gdf_crs_bounds is None:
-        with importlib.resources.path(
-            f"{__package__}.resources", "crs_bounds.geojson"
-        ) as path:
+        resource = importlib.resources.files(f"{__package__}.resources").joinpath(
+            "crs_bounds.geojson"
+        )
+        with importlib.resources.as_file(resource) as path:
             __gdf_crs_bounds = gpd.GeoDataFrame.from_file(path)
 
     return __gdf_crs_bounds

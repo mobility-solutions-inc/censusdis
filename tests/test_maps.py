@@ -490,13 +490,13 @@ class GeographicCentroidsTestCase(unittest.TestCase):
         """We should get a slightly different centroid under the projection to 3857."""
         centroid_geo = cmap.geographic_centroids(self.gdf_wy).iloc[0]
 
-        centroid_4269 = self.gdf_wy.centroid.iloc[0]
+        planar_centroid_4269 = self.gdf_wy.geometry.iloc[0].centroid
 
         # In the x direction the projection should be symmetric about the
         # centroid, but in the y it should not. This is because the projection
         # stretches the y non-linearly.
-        self.assertAlmostEqual(centroid_4269.x, centroid_geo.x, places=10)
-        self.assertGreater(centroid_geo.y - centroid_4269.y, 0.03)
+        self.assertAlmostEqual(planar_centroid_4269.x, centroid_geo.x, places=10)
+        self.assertGreater(centroid_geo.y - planar_centroid_4269.y, 0.03)
 
 
 class MostlyContains(unittest.TestCase):
