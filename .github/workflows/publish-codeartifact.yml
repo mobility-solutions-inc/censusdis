@@ -103,7 +103,7 @@ jobs:
           version: ${{ env.UV_VERSION }}
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708 # v5
+        uses: aws-actions/configure-aws-credentials@e6de054238d6b7531b4efff3b6587d9aade6a06c # v6
         with:
           role-to-assume: arn:aws:iam::156551339589:role/github-actions-codeartifact-censusdis
           aws-region: ${{ env.AWS_REGION }}
