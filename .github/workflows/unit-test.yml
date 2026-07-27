@@ -28,6 +28,8 @@ jobs:
   unit-test:
     needs: list-tests
     runs-on: ubuntu-latest
+    env:
+      US_CENSUS_API_KEY: ${{ secrets.US_CENSUS_API_KEY }}
     strategy:
       matrix:
         test: ${{ fromJson(needs.list-tests.outputs.matrix) }}

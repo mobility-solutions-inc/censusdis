@@ -22,6 +22,8 @@ jobs:
   nbmake:
     needs: list-notebooks
     runs-on: ubuntu-latest
+    env:
+      US_CENSUS_API_KEY: ${{ secrets.US_CENSUS_API_KEY }}
     strategy:
       matrix:
         notebook: ${{ fromJson(needs.list-notebooks.outputs.matrix) }}
