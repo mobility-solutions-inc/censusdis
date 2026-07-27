@@ -7,6 +7,13 @@ on:
   push:
     branches-ignore:
       - main
+    paths:
+      - "**/*.py"
+      - "**/*.ipynb"
+      - "pyproject.toml"
+      - "poetry.lock"
+      - ".flake8"
+      - "pylintrc"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:

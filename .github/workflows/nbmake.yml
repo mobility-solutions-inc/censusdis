@@ -8,6 +8,11 @@ on:
   push:
     branches-ignore:
       - main
+    paths:
+      - "censusdis/**"
+      - "notebooks/**"
+      - "pyproject.toml"
+      - "poetry.lock"
 
 jobs:
   # List the notebooks
@@ -77,6 +82,4 @@ jobs:
       - name: Test run notebook
         run: |
           source .venv/bin/activate
-          # pytest --junitxml=reports/nbmake/${{matrix.notebook-type}}/junit.xml --nbmake ${{matrix.notebook-dir}}/*.ipynb
-          # genbadge tests --name "${{matrix.notebook-type}} tests" -i reports/nbmake/${{matrix.notebook-type}}/junit.xml -o reports/nbmake/nbmake-${{matrix.notebook-type}}-badge.svg
           pytest --nbmake --nbmake-timeout=600 "${{matrix.notebook}}"
