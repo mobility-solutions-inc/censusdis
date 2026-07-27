@@ -1,0 +1,16 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:best-practices"],
+  "timezone": "America/New_York",
+  "dependencyDashboard": true,
+  "dependencyDashboardApproval": true,
+  "schedule": ["before 7:00am"],
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "schedule": "at any time"
+  },
+  "automerge": true,
+  "minimumReleaseAge": "3 days",
+  "reviewers": ["@ctriley"],
+  "assignees": ["@ctriley"]
+}

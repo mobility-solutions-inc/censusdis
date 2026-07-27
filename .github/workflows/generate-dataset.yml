@@ -15,6 +15,12 @@ on:
     branches:
       - main
     types: [closed]
+    paths:
+      - "censusdis/**"
+      - "tests/**"
+      - "utils/**"
+      - "pyproject.toml"
+      - "poetry.lock"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:

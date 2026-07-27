@@ -7,7 +7,14 @@
 
 name: test-matrix
 
-on: pull_request
+on:
+  pull_request:
+    paths:
+      - "censusdis/**"
+      - "tests/**"
+      - "utils/**"
+      - "pyproject.toml"
+      - "poetry.lock"
 
 jobs:
   test-matrix:

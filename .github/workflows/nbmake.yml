@@ -8,6 +8,11 @@ on:
   push:
     branches-ignore:
       - main
+    paths:
+      - "censusdis/**"
+      - "notebooks/**"
+      - "pyproject.toml"
+      - "poetry.lock"
 
 jobs:
   # List the notebooks
