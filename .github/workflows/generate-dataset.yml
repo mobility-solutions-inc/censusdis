@@ -1,14 +1,12 @@
-# Automates running symbolic.py to generate a 
-# dataset documentation file and commit it back 
-# to the repo and push. This is run after 
-# a PR is merged so that the datasets file has 
-# the updated datasets documentation.
+# Automates running symbolic.py to generate the dataset constants module.
+# When the generated module changes, this workflow opens or updates a pull
+# request so the change follows the same review rules as other changes.
 
 name: generate-dataset
 
 on:
   schedule:
-    # The census servers update ad midnight ET. Let's try to be just
+    # The census servers update at midnight ET. Let's try to be just
     # after that regardless of whether we are in EST or EDT.
     - cron: '17 5 * * *'
   pull_request:
@@ -20,14 +18,25 @@ on:
       - "tests/**"
       - "utils/**"
       - "pyproject.toml"
-      - "poetry.lock"
+      - "uv.lock"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: generate-dataset
+  cancel-in-progress: false
+
 jobs:
   generate-dataset:
-    if: ${{ github.event_name == 'schedule' || github.event.pull_request.merged }}
+    if: >-
+      ${{ github.event_name == 'schedule' ||
+          github.event_name == 'workflow_dispatch' ||
+          github.event.pull_request.merged == true }}
     runs-on: ubuntu-latest
     env:
       US_CENSUS_API_KEY: ${{ secrets.US_CENSUS_API_KEY }}
@@ -38,8 +47,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          ssh-key:
-            ${{secrets.DEPLOY_ACTION_SECRET}}
+          ref: main
       #----------------------------------------------
       #       set up python
       #----------------------------------------------
@@ -62,14 +70,20 @@ jobs:
       - name: Run symbolic.py to update datasets file
         run: uv run --no-sync python utils/symbolic.py datasets.py
       #----------------------------------------------
-      #           commit updated datasets
+      #       open or update generated-data PR
       #----------------------------------------------
-      - name: Commit newly generated datasets file
-        run: |
-          /usr/bin/git config --local user.email "action@github.com"
-          /usr/bin/git config --local user.name "GitHub Action"
-          /usr/bin/git add censusdis/datasets.py
-          /usr/bin/git diff --staged --quiet || /usr/bin/git commit -m "Update datasets [github action]"
-      - name: Update git
-        run: |
-          git push -f
+      - name: Create or update datasets pull request
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          token: ${{ secrets.DATASET_UPDATE_TOKEN || github.token }}
+          add-paths: censusdis/datasets.py
+          base: main
+          branch: automation/update-datasets
+          commit-message: Update datasets [github action]
+          delete-branch: true
+          sign-commits: true
+          title: Update Census datasets
+          body: |
+            Regenerates `censusdis/datasets.py` from the current Census API dataset catalog.
+
+            This pull request is maintained automatically by the `generate-dataset` workflow.
