@@ -30,41 +30,35 @@ workflow, here is a
 [guide](https://gist.github.com/Chaser324/ce0505fbed06b947d962)
 to starting out.
 
-## Development with Poetry
+## Development with uv
 
-We use [poetry](https://python-poetry.org/) to manage the dependencies
-in `censusdis`. Many modern IDEs will recognize a 
-poetry project and download the dependencies necessary
-for development. If yours does not, or you want to 
-download dependencies manually, simply
-[install poetry](https://python-poetry.org/docs/#installation)
-and then use
+We use [uv](https://docs.astral.sh/uv/) to manage the dependencies
+and virtual environment for `censusdis`. Install uv by following its
+[installation guide](https://docs.astral.sh/uv/getting-started/installation/),
+then run
+
 ```shell
-poetry install
+uv sync --locked
 ```
-to install all the necessary dependencies for your project. 
+
+to install the project and all development dependencies.
 
 If you want to use `geopandas.GeoDataFrame.explore` in notebooks, install
 with the necessary extras using 
+
 ```shell
-poetry install -E explore
+uv sync --locked --extra explore
 ```
 
-Next, you can use
-```shell
-poetry shell
-```
-to start a shell in a virtual environment with all 
-the dependencies. From this shell you can run
-a python interpreter with the `censusdis` source
-code and all the necessary external dependencies.
+Use `uv run` to execute commands in the project environment without
+activating it, for example `uv run python`. If you prefer an activated
+shell, activate `.venv` using the command appropriate for your platform.
 
 If you need to
-add a dependency to do you work, which shoud be 
-rare, please consult the 
-[poetry documentation](https://python-poetry.org/docs/)
-for
-how to use `poetry add`, `poetry lock` and `poetry update`.
+add a dependency to do your work, which should be
+rare, consult the
+[uv dependency documentation](https://docs.astral.sh/uv/concepts/projects/dependencies/)
+for how to use `uv add`, `uv lock`, and `uv sync --upgrade`.
 
 ## Census License
 
@@ -87,23 +81,19 @@ pull request. You can do this from your IDE, usually
 by right clicking on the test directory and choosing
 to run the tests in contains.
 
-Alternatively, you can run them from the command line
-inside your poetry shell using 
+Alternatively, you can run them from the command line using
 
 ```shell
- poetry run python -m pytest
+uv run python -m pytest
 ```
-
-(note that if you are already in a shell started with
-`poetry shell` you do not need the `poetry run` part.)
 
 If you would like to see if the new code you wrote is
 covered by tests, you can generate a full test coverage
 report with
 
 ```shell
-poetry run coverage run -m pytest --junitxml=reports/junit/junit.xml
-poetry run coverage html -d ./reports/coverage 
+uv run coverage run -m pytest --junitxml=reports/junit/junit.xml
+uv run coverage html -d ./reports/coverage
 ```
 
 Now open `./reports/coverage/index.html` in a browser
@@ -122,9 +112,9 @@ Before you commit your code, we recommend you run
 as follows:
 
 ```shell
-poetry run flake8 .
-poetry run ruff check --fix .
-poetry run ruff format .
+uv run flake8 .
+uv run ruff check --fix .
+uv run ruff format .
 ```
 
 and correct any errors that are found. If you submit
@@ -147,7 +137,7 @@ file `datasets.py` using a utility called `symbolic.py`.
 You can be a good citizen by running
 
 ```shell
- poetry run python utils/symbolic.py datasets.py
+uv run python utils/symbolic.py datasets.py
 ```
 
 from the root directory of your clone of the repository
