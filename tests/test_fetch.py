@@ -2,7 +2,7 @@
 """Tests for the fetch implementation."""
 
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, call, patch
 
 import pandas as pd
 import requests
@@ -47,6 +47,33 @@ class ParseCensusJsonTestCase(unittest.TestCase):
 
 class JsonFromUrlTestCase(unittest.TestCase):
     """Tests of responses from the Census API."""
+
+    @patch("censusdis.impl.fetch.sleep")
+    @patch("censusdis.impl.fetch.requests.get")
+    def test_retries_connection_errors_with_exponential_backoff(
+        self, requests_get, sleep
+    ):
+        """Retry transient connection errors before returning JSON."""
+        response = Mock(status_code=200)
+        response.json.return_value = {"variables": {}}
+        requests_get.side_effect = [
+            requests.exceptions.ConnectionError("first failure"),
+            requests.exceptions.ConnectionError("second failure"),
+            requests.exceptions.ConnectionError("third failure"),
+            response,
+        ]
+
+        actual_json = censusdis.impl.fetch.json_from_url(
+            "https://api.census.gov/data/2023/acs/acs1/groups/B01001.json"
+        )
+
+        self.assertEqual({"variables": {}}, actual_json)
+        self.assertEqual(4, requests_get.call_count)
+        self.assertEqual(
+            120,
+            requests_get.call_args.kwargs["timeout"],
+        )
+        sleep.assert_has_calls([call(1), call(2), call(4)])
 
     @patch("censusdis.impl.fetch.requests.get")
     def test_current_invalid_api_key_response(self, requests_get):
