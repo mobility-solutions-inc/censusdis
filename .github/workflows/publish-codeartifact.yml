@@ -1,13 +1,12 @@
 name: Publish to CodeArtifact
 
 on:
-  pull_request:
+  push:
+    branches: ["main"]
     paths:
       - ".github/workflows/publish-codeartifact.yml"
       - "pyproject.toml"
       - "uv.lock"
-  release:
-    types: [published]
   workflow_dispatch:
 
 env:
@@ -20,6 +19,7 @@ env:
 jobs:
   build:
     name: Build and verify (${{ matrix.name }})
+    if: github.ref == 'refs/heads/main'
     strategy:
       fail-fast: false
       matrix:
@@ -83,9 +83,7 @@ jobs:
     name: Publish wheel
     needs: build
     runs-on: ubuntu-latest
-    if: >-
-      github.event_name == 'release' ||
-      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+    if: github.ref == 'refs/heads/main'
     permissions:
       contents: read
       id-token: write
