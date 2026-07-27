@@ -553,7 +553,9 @@ def download_lodes(
 
     if download_variables is None:
         download_variables = [
-            col for col in df_lodes.columns if df_lodes[col].dtype != object
+            col
+            for col in df_lodes.columns
+            if pd.api.types.is_numeric_dtype(df_lodes[col].dtype)
         ]
 
     # Group based on group keys.
