@@ -399,8 +399,8 @@ class CensusGeographyQuerySpec:
         dataset
             The dataset to download from. For example `"acs/acs5"`,
             `"dec/pl"`, or `"timeseries/poverty/saipe/schdist"`. There are
-            symbolic names for datasets, like `ACS5` for `"acs/acs5"
-            in :py:module:`censusdis.datasets`.
+            symbolic names for datasets, like `ACS5` for `"acs/acs5"`
+            in :py:mod:`censusdis.datasets`.
         year
             The vintage to download data for. For most data sets this is
             an integer year, for example, `2020`.

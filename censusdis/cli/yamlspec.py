@@ -138,8 +138,8 @@ class VariableSpec(ABC):
         dataset
             The dataset to download from. For example `"acs/acs5"`,
             `"dec/pl"`, or `"timeseries/poverty/saipe/schdist"`. There are
-            symbolic names for datasets, like `ACS5` for `"acs/acs5"
-            in :py:module:`censusdis.datasets`.
+            symbolic names for datasets, like `ACS5` for `"acs/acs5"`
+            in :py:mod:`censusdis.datasets`.
         vintage
             The vintage to download data for. For most data sets this is
             an integer year, for example, `2020`. But for
@@ -147,7 +147,7 @@ class VariableSpec(ABC):
         set_to_nan
             A list of values that should be set to NaN. Normally these are special
             values that the U.S. Census API sometimes returns. If `True`, then all
-            values in :py:ref:`censusdis.values.ALL_SPECIAL_VALUES` will be replaced.
+            values in :py:data:`censusdis.values.ALL_SPECIAL_VALUES` will be replaced.
             If `False`, no replacements will be made.
         skip_annotations
             If `True` try to filter out `group` or `leaves_of_group` variables that are
@@ -447,7 +447,7 @@ class CensusGroup(VariableSpec):
 
 class VariableSpecCollection(VariableSpec):
     """
-    Specification built on top of a collection of other :py:class:`~VariableSpec`s.
+    Specification built on top of a collection of :py:class:`VariableSpec` instances.
 
     When downloading, all the groups and all the variables
     specified in any of the constituent specs will be
@@ -456,7 +456,7 @@ class VariableSpecCollection(VariableSpec):
     Parameters
     ----------
     variable_specs
-        A collection of other :py:class:`~VariableSpec`s.
+        A collection of :py:class:`VariableSpec` instances.
     """
 
     def __init__(self, variable_specs: Iterable[VariableSpec]):
@@ -556,7 +556,7 @@ class DataSpec:
     A specification for what data we want from the U.S. Census API.
 
     In order to download data we must know the data set and vintage
-    and have one or more :py:class:`~VariableSpec`s that tell us
+    and have one or more :py:class:`VariableSpec` instances that tell us
     what variables we need and what synthetic variables to create,
     for example fractional variables.
 
@@ -565,8 +565,8 @@ class DataSpec:
     dataset
         The dataset to download from. For example `"acs/acs5"`,
         `"dec/pl"`, or `"timeseries/poverty/saipe/schdist"`. There are
-        symbolic names for datasets, like `ACS5` for `"acs/acs5"
-        in :py:module:`censusdis.datasets`.
+        symbolic names for datasets, like `ACS5` for `"acs/acs5"`
+        in :py:mod:`censusdis.datasets`.
     vintage
         The vintage to download data for. For most data sets this is
         an integer year, for example, `2020`.        specs
@@ -835,7 +835,7 @@ class PlotSpec:
         """
         Additional keyword args to control the plot.
 
-        e.g. `{'figsize': [12, 8]} to change the default size of the plot.
+        e.g. `{'figsize': [12, 8]}` to change the default size of the plot.
         """
         return self._plot_kwargs
 

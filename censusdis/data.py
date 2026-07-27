@@ -413,8 +413,8 @@ def download_lodes(
     dataset
         The dataset to download from. For example `"acs/acs5"`,
         `"dec/pl"`, or `"timeseries/poverty/saipe/schdist"`. There are
-        symbolic names for datasets, like `ACS5` for `"acs/acs5"
-        in :py:module:`censusdis.datasets`.
+        symbolic names for datasets, like `ACS5` for `"acs/acs5"`
+        in :py:mod:`censusdis.datasets`.
     vintage
         The vintage to download data for. For most data sets this is
         an integer year, for example, `2020`. But for
@@ -632,7 +632,7 @@ def download(
         The dataset to download from. For example `"acs/acs5"`,
         `"dec/pl"`, or `"timeseries/poverty/saipe/schdist"`. There are
         symbolic names for datasets, like `ACS5` for `"acs/acs5"`
-        in :py:module:`censusdis.datasets`.
+        in :py:mod:`censusdis.datasets`.
     vintage
         The vintage to download data for. For most data sets this is
         an integer year, for example, `2020`. But for
@@ -652,7 +652,7 @@ def download(
     set_to_nan
         A list of values that should be set to NaN. Normally these are special
         values that the U.S. Census API sometimes returns. If `True`, then all
-        values in :py:ref:`censusdis.values.ALL_SPECIAL_VALUES` will be replaced.
+        values in :py:data:`censusdis.values.ALL_SPECIAL_VALUES` will be replaced.
         If `False`, no replacements will be made.
     skip_annotations
         If `True` try to filter out `group` or `leaves_of_group` variables that are
@@ -873,7 +873,7 @@ def _download_remote(
     set_to_nan
         A list of values that should be set to NaN. Normally these are special
         values that the U.S. Census API sometimes returns. If `True`, then all
-        values in :py:ref:`censusdis.values.ALL_SPECIAL_VALUES` will be replaced.
+        values in :py:data:`censusdis.values.ALL_SPECIAL_VALUES` will be replaced.
         If `False`, no replacements will be made.
     query_filter
         A dictionary of values to filter on. For example, if
@@ -1349,8 +1349,8 @@ def _intersecting_geos_kws(
     dataset
         The dataset to download from. For example `"acs/acs5"`,
         `"dec/pl"`, or `"timeseries/poverty/saipe/schdist"`. There are
-        symbolic names for datasets, like `ACS5` for `"acs/acs5"
-        in :py:module:`censusdis.datasets`.
+        symbolic names for datasets, like `ACS5` for `"acs/acs5"`
+        in :py:mod:`censusdis.datasets`.
     vintage
         The vintage to download data for. For most data sets this is
         an integer year, for example, `2020`. But for
@@ -1500,8 +1500,8 @@ class ContainedWithin:
         dataset
             The dataset to download from. For example `"acs/acs5"`,
             `"dec/pl"`, or `"timeseries/poverty/saipe/schdist"`. There are
-            symbolic names for datasets, like `ACS5` for `"acs/acs5"
-            in :py:module:`censusdis.datasets`.
+            symbolic names for datasets, like `ACS5` for `"acs/acs5"`
+            in :py:mod:`censusdis.datasets`.
         vintage
             The vintage to download data for. For most data sets this is
             an integer year, for example, `2020`. But for
@@ -1521,7 +1521,7 @@ class ContainedWithin:
         set_to_nan
             A list of values that should be set to NaN. Normally these are special
             values that the U.S. Census API sometimes returns. If `True`, then all
-            values in :py:ref:`censusdis.values.ALL_SPECIAL_VALUES` will be replaced.
+            values in :py:data:`censusdis.values.ALL_SPECIAL_VALUES` will be replaced.
             If `False`, no replacements will be made.
         skip_annotations
             If `True` try to filter out `group` or `leaves_of_group` variables that are
