@@ -14,4 +14,4 @@ from .impl.exceptions import CensusApiException
 __all__ = ("CensusApiException",)
 
 # Generate a version number.
-__getattr__ = getattr_with_version("censusdis", __file__, __name__)
+__getattr__ = getattr_with_version("ontra-censusdis", __file__, __name__)

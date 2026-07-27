@@ -54,9 +54,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          wheel="$(find dist -maxdepth 1 -name 'censusdis-*-py3-none-any.whl' -print -quit)"
+          wheel="$(find dist -maxdepth 1 -name 'ontra_censusdis-*-py3-none-any.whl' -print -quit)"
           if [[ -z "$wheel" ]]; then
-            echo "Expected one platform-independent censusdis wheel in dist/" >&2
+            echo "Expected one platform-independent ontra-censusdis wheel in dist/" >&2
             ls -la dist >&2
             exit 1
           fi
@@ -65,7 +65,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          wheel="$(find dist -maxdepth 1 -name 'censusdis-*-py3-none-any.whl' -print -quit)"
+          wheel="$(find dist -maxdepth 1 -name 'ontra_censusdis-*-py3-none-any.whl' -print -quit)"
           uv venv --python 3.12 .venv-wheel
           uv pip install --python .venv-wheel/bin/python "$wheel"
           .venv-wheel/bin/python -c \
@@ -74,7 +74,7 @@ jobs:
       - name: Upload wheel
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: censusdis-wheel-${{ matrix.name }}
+          name: ontra-censusdis-wheel-${{ matrix.name }}
           path: dist/*.whl
           if-no-files-found: error
           retention-days: 14
@@ -94,7 +94,7 @@ jobs:
       - name: Download verified wheel
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
-          name: censusdis-wheel-Linux
+          name: ontra-censusdis-wheel-Linux
           path: dist
 
       - name: Set up uv

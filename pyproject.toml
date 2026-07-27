@@ -1,5 +1,5 @@
 [project]
-name = "censusdis"
+name = "ontra-censusdis"
 version = "1.5.0"
 description = "US Census utilities for a variety of data loading, analysis, and mapping purposes."
 license = "LicenseRef-HL3-CL-ECO-EXTR-FFD-LAW-MIL-SV"
