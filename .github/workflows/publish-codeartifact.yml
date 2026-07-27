@@ -1,0 +1,130 @@
+name: Publish to CodeArtifact
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+env:
+  AWS_REGION: us-east-2
+  CODEARTIFACT_DOMAIN: ontra
+  CODEARTIFACT_DOMAIN_OWNER: "156551339589"
+  CODEARTIFACT_REPOSITORY: python-wheels
+  UV_VERSION: 0.11.32
+
+jobs:
+  build:
+    name: Build and verify (${{ matrix.name }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux
+            os: ubuntu-latest
+          - name: macOS
+            os: macos-latest
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+
+      - name: Build wheel
+        run: uv build --wheel
+
+      - name: Verify wheel is platform independent
+        shell: bash
+        run: |
+          set -euo pipefail
+          wheel="$(find dist -maxdepth 1 -name 'censusdis-*-py3-none-any.whl' -print -quit)"
+          if [[ -z "$wheel" ]]; then
+            echo "Expected one platform-independent censusdis wheel in dist/" >&2
+            ls -la dist >&2
+            exit 1
+          fi
+
+      - name: Install and import wheel
+        shell: bash
+        run: |
+          set -euo pipefail
+          wheel="$(find dist -maxdepth 1 -name 'censusdis-*-py3-none-any.whl' -print -quit)"
+          uv venv .venv-wheel
+          uv pip install --python .venv-wheel/bin/python "$wheel"
+          .venv-wheel/bin/python -c \
+            "import censusdis; print(f'censusdis version: {censusdis.version}')"
+
+      - name: Upload wheel
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: censusdis-wheel-${{ matrix.name }}
+          path: dist/*.whl
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    name: Publish wheel
+    needs: build
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'release' ||
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      # censusdis is a pure-Python package, so macOS and Linux produce the
+      # same py3-none-any wheel. Publish one copy after both builds pass.
+      - name: Download verified wheel
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: censusdis-wheel-Linux
+          path: dist
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: ${{ env.UV_VERSION }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708 # v5
+        with:
+          role-to-assume: arn:aws:iam::156551339589:role/github-actions-codeartifact-censusdis
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Get CodeArtifact credentials
+        id: codeartifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          token="$(aws codeartifact get-authorization-token \
+            --domain "$CODEARTIFACT_DOMAIN" \
+            --domain-owner "$CODEARTIFACT_DOMAIN_OWNER" \
+            --query authorizationToken \
+            --output text)"
+          echo "::add-mask::$token"
+          echo "token=$token" >> "$GITHUB_OUTPUT"
+
+          repository_url="$(aws codeartifact get-repository-endpoint \
+            --domain "$CODEARTIFACT_DOMAIN" \
+            --domain-owner "$CODEARTIFACT_DOMAIN_OWNER" \
+            --repository "$CODEARTIFACT_REPOSITORY" \
+            --format pypi \
+            --query repositoryEndpoint \
+            --output text)"
+          echo "repository-url=$repository_url" >> "$GITHUB_OUTPUT"
+
+      - name: Publish to CodeArtifact
+        run: >-
+          uv publish dist/*.whl
+          --publish-url "${{ steps.codeartifact.outputs.repository-url }}"
+          --username aws
+          --password "${{ steps.codeartifact.outputs.token }}"
