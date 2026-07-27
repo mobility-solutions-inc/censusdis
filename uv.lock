@@ -257,7 +257,7 @@ wheels = [
 ]
 
 [[package]]
-name = "censusdis"
+name = "ontra-censusdis"
 version = "1.5.0"
 source = { editable = "." }
 dependencies = [
