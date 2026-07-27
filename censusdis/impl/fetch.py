@@ -171,10 +171,11 @@ def json_from_url(url: str, params: Optional[Mapping[str, str]] = None) -> Any:
             return parsed_json
         except requests.exceptions.JSONDecodeError:
             logger.debug(f"API call got 200 with unparseable JSON:\n{request.text}")
-            if (
-                "You included a key with this request, however, it is not valid."
-                in request.text
-            ):
+            invalid_key_markers = (
+                "You included a key with this request, however, it is not valid.",
+                "<title>Invalid Key</title>",
+            )
+            if any(marker in request.text for marker in invalid_key_markers):
                 message = f"Census API request to {request.url} failed because your key is invalid."
             else:
                 message = f"Census API request to {request.url} failed. Unable to parse returned JSON:\n{request.text}"

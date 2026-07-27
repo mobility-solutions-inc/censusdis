@@ -2,8 +2,10 @@
 """Tests for the fetch implementation."""
 
 import unittest
+from unittest.mock import Mock, patch
 
 import pandas as pd
+import requests
 
 import censusdis.impl.fetch
 from censusdis import CensusApiException
@@ -41,6 +43,32 @@ class ParseCensusJsonTestCase(unittest.TestCase):
         """Test with malformed JSON."""
         with self.assertRaises(CensusApiException):
             censusdis.impl.fetch._df_from_census_json([])
+
+
+class JsonFromUrlTestCase(unittest.TestCase):
+    """Tests of responses from the Census API."""
+
+    @patch("censusdis.impl.fetch.requests.get")
+    def test_current_invalid_api_key_response(self, requests_get):
+        """Recognize the Census API's current invalid-key HTML response."""
+        response = Mock()
+        response.status_code = 200
+        response.url = "https://api.census.gov/data/2023/acs/acs1"
+        response.text = """
+        <html>
+          <head><title>Invalid Key</title></head>
+          <body>A valid key must be included with this request.</body>
+        </html>
+        """
+        response.json.side_effect = requests.exceptions.JSONDecodeError(
+            "Expecting value", response.text, 0
+        )
+        requests_get.return_value = response
+
+        with self.assertRaisesRegex(
+            CensusApiException, "failed because your key is invalid"
+        ):
+            censusdis.impl.fetch.json_from_url(response.url)
 
 
 if __name__ == "__main__":
