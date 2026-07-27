@@ -1,6 +1,11 @@
 name: Publish to CodeArtifact
 
 on:
+  pull_request:
+    paths:
+      - ".github/workflows/publish-codeartifact.yml"
+      - "pyproject.toml"
+      - "uv.lock"
   release:
     types: [published]
   workflow_dispatch:
