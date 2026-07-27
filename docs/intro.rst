@@ -19,7 +19,7 @@ Installation follows the typical model for Python::
 will install the package in your python environment.
 
 If you are using a tool like `conda <https://docs.conda.io/en/latest/>`_
-or `poetry <https://python-poetry.org/>`_ to manage
+or `uv <https://docs.astral.sh/uv/>`_ to manage
 your dependencies, then you can add ``censusdis`` the
 same way you would add any other dependency.
 
