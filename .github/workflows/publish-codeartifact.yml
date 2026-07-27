@@ -129,10 +129,12 @@ jobs:
             --query repositoryEndpoint \
             --output text)"
           echo "repository-url=$repository_url" >> "$GITHUB_OUTPUT"
+          echo "check_url=${repository_url%/}/simple/" >> "$GITHUB_OUTPUT"
 
       - name: Publish to CodeArtifact
         run: >-
           uv publish dist/*.whl
           --publish-url "${{ steps.codeartifact.outputs.repository-url }}"
+          --check-url "${{ steps.codeartifact.outputs.check_url }}"
           --username aws
           --password "${{ steps.codeartifact.outputs.token }}"
