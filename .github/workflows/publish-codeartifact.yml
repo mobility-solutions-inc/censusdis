@@ -19,7 +19,9 @@ env:
 jobs:
   build:
     name: Build and verify (${{ matrix.name }})
-    if: github.ref == 'refs/heads/main'
+    if: >-
+      github.repository == 'mobility-solutions-inc/censusdis' &&
+      github.ref == 'refs/heads/main'
     strategy:
       fail-fast: false
       matrix:
@@ -35,6 +37,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
@@ -83,7 +87,10 @@ jobs:
     name: Publish wheel
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: >-
+      github.repository == 'mobility-solutions-inc/censusdis' &&
+      github.ref == 'refs/heads/main'
+    environment: aws-codeartifact
     permissions:
       contents: read
       id-token: write
@@ -107,6 +114,9 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::156551339589:role/github-actions-codeartifact-censusdis
           aws-region: ${{ env.AWS_REGION }}
+          allowed-account-ids: "156551339589"
+          mask-aws-account-id: true
+          unset-current-credentials: true
 
       - name: Get CodeArtifact credentials
         id: codeartifact
@@ -132,9 +142,13 @@ jobs:
           echo "check_url=${repository_url%/}/simple/" >> "$GITHUB_OUTPUT"
 
       - name: Publish to CodeArtifact
+        env:
+          CODEARTIFACT_TOKEN: ${{ steps.codeartifact.outputs.token }}
+          CHECK_URL: ${{ steps.codeartifact.outputs.check_url }}
+          REPOSITORY_URL: ${{ steps.codeartifact.outputs.repository-url }}
         run: >-
           uv publish dist/*.whl
-          --publish-url "${{ steps.codeartifact.outputs.repository-url }}"
-          --check-url "${{ steps.codeartifact.outputs.check_url }}"
+          --publish-url "$REPOSITORY_URL"
+          --check-url "$CHECK_URL"
           --username aws
-          --password "${{ steps.codeartifact.outputs.token }}"
+          --password "$CODEARTIFACT_TOKEN"

@@ -10,9 +10,17 @@
 name: coverage-report
 
 on:
-  workflow_run:
-    workflows: [generate-dataset]
-    types: [completed]
+  push:
+    branches:
+      - main
+    paths:
+      - "censusdis/**"
+      - "tests/**"
+      - "utils/**"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".github/workflows/coverage-report.yml"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -24,10 +32,11 @@ concurrency:
 
 jobs:
   test-coverage:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: >-
+      github.repository == 'mobility-solutions-inc/censusdis' &&
+      github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    env:
-      US_CENSUS_API_KEY: ${{ secrets.US_CENSUS_API_KEY }}
+    environment: main-secrets
     steps:
       #----------------------------------------------
       #       check out repo
@@ -35,8 +44,8 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          ssh-key:
-            ${{secrets.DEPLOY_ACTION_SECRET}}
+          ref: main
+          persist-credentials: false
       #----------------------------------------------
       #       set up python
       #----------------------------------------------
@@ -58,6 +67,8 @@ jobs:
       #----------------------------------------------
       - name: Run tests with coverage
         id: runTests
+        env:
+          US_CENSUS_API_KEY: ${{ secrets.US_CENSUS_API_KEY }}
         run: uv run --no-sync coverage run -m pytest --junitxml=reports/junit/junit.xml
       #----------------------------------------------
       #              archive test artifacts
