@@ -87,6 +87,12 @@ Alternatively, you can run them from the command line using
 uv run python -m pytest
 ```
 
+Live Census API queries require an API key in `US_CENSUS_API_KEY` or
+`~/.censusdis/api_key.txt`. When neither is available, pytest still runs tests
+that use public metadata and other services, but skips queries that the Census
+API rejects for lacking a key. Notebook execution is also skipped because
+notebook kernels cannot run the live examples without a key.
+
 If you would like to see if the new code you wrote is
 covered by tests, you can generate a full test coverage
 report with

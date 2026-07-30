@@ -15,8 +15,10 @@ on:
       - "censusdis/**"
       - "tests/**"
       - "utils/**"
+      - "conftest.py"
       - "pyproject.toml"
       - "poetry.lock"
+      - ".github/workflows/unit-test.yml"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:

@@ -13,8 +13,10 @@ on:
       - "censusdis/**"
       - "tests/**"
       - "utils/**"
+      - "conftest.py"
       - "pyproject.toml"
       - "poetry.lock"
+      - ".github/workflows/test-matrix.yml"
 
 permissions:
   contents: read
