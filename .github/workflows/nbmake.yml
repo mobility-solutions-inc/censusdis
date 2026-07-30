@@ -11,8 +11,10 @@ on:
     paths:
       - "censusdis/**"
       - "notebooks/**"
+      - "conftest.py"
       - "pyproject.toml"
       - "poetry.lock"
+      - ".github/workflows/nbmake.yml"
 
 permissions:
   contents: read
