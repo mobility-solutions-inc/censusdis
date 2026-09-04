@@ -85,6 +85,18 @@ ACSSE = "acs/acsse"
 
 ACS_FLOWS = "acs/flows"
 
+AIESBASIC = "aiesbasic"
+
+AIESECOM = "aiesecom"
+
+AIESEXP01 = "aiesexp01"
+
+AIESEXP02 = "aiesexp02"
+
+AIESINV = "aiesinv"
+
+AIESMISCSECTOR = "aiesmiscsector"
+
 AIESNONEMP = "aiesnonemp"
 
 ASE_CSA = "ase/csa"
@@ -609,8 +621,6 @@ SIPP_TOPICALEX = "sipp/topicalex/1993panel/wave3"
 
 SIPP_TOPICALRES = "sipp/topicalres/2001panel/wave8"
 
-TIMESERIES_AIES = "timeseries/aies/miscsector"
-
 TIMESERIES_ASM = "timeseries/asm/value2017"
 
 TIMESERIES_BDS = "timeseries/bds"
@@ -702,6 +712,12 @@ DATASET_REFERENCE_URLS = {
     ACS5_SUBJECT: "http://api.census.gov/data/2024/acs/acs5/subject",
     ACSSE: "http://api.census.gov/data/2024/acs/acsse",
     ACS_FLOWS: "http://api.census.gov/data/2022/acs/flows",
+    AIESBASIC: "http://api.census.gov/data/2024/aiesbasic",
+    AIESECOM: "http://api.census.gov/data/2024/aiesecom",
+    AIESEXP01: "http://api.census.gov/data/2023/aiesexp01",
+    AIESEXP02: "http://api.census.gov/data/2024/aiesexp02",
+    AIESINV: "http://api.census.gov/data/2024/aiesinv",
+    AIESMISCSECTOR: "http://api.census.gov/data/2024/aiesmiscsector",
     AIESNONEMP: "http://api.census.gov/data/2023/aiesnonemp",
     ASE_CSA: "http://api.census.gov/data/2016/ase/csa",
     ASE_CSCB: "http://api.census.gov/data/2016/ase/cscb",
@@ -714,14 +730,14 @@ DATASET_REFERENCE_URLS = {
     CFSPUMDEST: "http://api.census.gov/data/2017/cfspum/cfspumdest",
     CFSPUMORIG: "http://api.census.gov/data/2017/cfspum/cfspumorig",
     CFSTEMP: "http://api.census.gov/data/2022/cfstemp",
-    CPS_ARTS_FEB: "http://api.census.gov/data/2020/cps/arts/feb",
+    CPS_ARTS_FEB: "http://api.census.gov/data/2025/cps/arts/feb",
     CPS_ASEC_MAR: "http://api.census.gov/data/2025/cps/asec/mar",
     CPS_BASIC_APR: "http://api.census.gov/data/2026/cps/basic/apr",
     CPS_BASIC_AUG: "http://api.census.gov/data/2025/cps/basic/aug",
     CPS_BASIC_DEC: "http://api.census.gov/data/2025/cps/basic/dec",
     CPS_BASIC_FEB: "http://api.census.gov/data/2026/cps/basic/feb",
     CPS_BASIC_JAN: "http://api.census.gov/data/2026/cps/basic/jan",
-    CPS_BASIC_JUL: "http://api.census.gov/data/2025/cps/basic/jul",
+    CPS_BASIC_JUL: "http://api.census.gov/data/2026/cps/basic/jul",
     CPS_BASIC_JUN: "http://api.census.gov/data/2026/cps/basic/jun",
     CPS_BASIC_MAR: "http://api.census.gov/data/2026/cps/basic/mar",
     CPS_BASIC_MAY: "http://api.census.gov/data/2026/cps/basic/may",
@@ -900,13 +916,13 @@ DATASET_REFERENCE_URLS = {
     ECN_TYPOP: "http://api.census.gov/data/2022/ecntypop",
     ECN_VALCON: "http://api.census.gov/data/2022/ecnvalcon",
     EWKS: "http://api.census.gov/data/2012/ewks",
-    GEOINFO: "http://api.census.gov/data/2024/geoinfo",
+    GEOINFO: "http://api.census.gov/data/2025/geoinfo",
     INTLTRADE_IMP_EXP: "http://api.census.gov/data/2018/intltrade/imp_exp",
     LANGUAGE: "http://api.census.gov/data/2013/language",
     NONEMP: "http://api.census.gov/data/2023/nonemp",
-    PDB_BLOCKGROUP: "http://api.census.gov/data/2024/pdb/blockgroup",
+    PDB_BLOCKGROUP: "http://api.census.gov/data/2026/pdb/blockgroup",
     PDB_STATECOUNTY: "http://api.census.gov/data/2020/pdb/statecounty",
-    PDB_TRACT: "http://api.census.gov/data/2024/pdb/tract",
+    PDB_TRACT: "http://api.census.gov/data/2026/pdb/tract",
     PEP_AGESEX: "http://api.census.gov/data/2014/pep/agesex",
     PEP_AGESPECIAL5: "http://api.census.gov/data/2014/pep/agespecial5",
     PEP_AGESPECIAL6: "http://api.census.gov/data/2014/pep/agespecial6",
@@ -964,7 +980,6 @@ DATASET_REFERENCE_URLS = {
     SIPP_TOPICALEDEX: "http://api.census.gov/data/1993/sipp/topicaledex/1993panel/wave8",
     SIPP_TOPICALEX: "http://api.census.gov/data/1993/sipp/topicalex/1993panel/wave3",
     SIPP_TOPICALRES: "http://api.census.gov/data/2001/sipp/topicalres/2001panel/wave8",
-    TIMESERIES_AIES: "http://api.census.gov/data/timeseries/aies/miscsector",
     TIMESERIES_ASM: "http://api.census.gov/data/timeseries/asm/value2017",
     TIMESERIES_BDS: "http://api.census.gov/data/timeseries/bds",
     TIMESERIES_EITS: "http://api.census.gov/data/timeseries/eits/vip",
