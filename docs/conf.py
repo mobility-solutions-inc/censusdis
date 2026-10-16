@@ -10,6 +10,7 @@
 
 import os
 import sys
+import tomllib
 import unittest.mock as mock
 from typing import MutableMapping
 
@@ -27,7 +28,6 @@ MOCK_MODULES = [
     "shapely.affinity",
     "shapely.geometry",
     "shapely.geometry.base",
-    "rtree",
 ]
 
 for mod_name in MOCK_MODULES:
@@ -46,12 +46,10 @@ def get_pyproject() -> MutableMapping:
     -------
         MutableMapping
     """
-    import toml
-
     toml_path = os.path.join(os.path.dirname(__file__), os.pardir, "pyproject.toml")
 
-    with open(toml_path) as fopen:
-        pyproject = toml.load(fopen)
+    with open(toml_path, "rb") as fopen:
+        pyproject = tomllib.load(fopen)
 
     return pyproject
 
