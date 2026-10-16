@@ -9,8 +9,6 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/censusdis?label=PyPI%20Downloads)
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/censusdis/censusdis)
-[![Tests Badge](../reports/junit/tests-badge.svg)](https://censusdis.github.io/censusdis/)
-[![Coverage Badge](../reports/coverage/coverage-badge.svg)](https://censusdis.github.io/censusdis/)
 [![Documentation Status](https://readthedocs.org/projects/censusdis/badge/?version=latest)](https://censusdis.readthedocs.io/en/latest/?badge=latest)
 
 `censusdis` is a package for discovering, loading, analyzing, and computing diversity, integration, and segregation metrics to U.S. Census demographic data. 

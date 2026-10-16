@@ -105,11 +105,8 @@ uv run coverage html -d ./reports/coverage
 Now open `./reports/coverage/index.html` in a browser
 and you should be able to see test coverage for the
 entire project, including the code you have been
-working on. If you want to see how it compares to
-the main branch of the code, go back to the 
-[censusdis Github page](https://github.com/vengroff/censusdis) 
-and click the code coverage
-icon at the top of the README.md file.
+working on. Reports are generated locally and ignored by Git; CI no longer
+publishes coverage reports or test-count badges.
 
 ## Flake8 and Ruff
 
