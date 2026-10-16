@@ -5,7 +5,7 @@
     <title>Coverage for censusdis/impl/geometry.py: 97%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_c827f16f.png">
     <link rel="stylesheet" href="style_cb_4667309f.css" type="text/css">
-    <script src="coverage_html_cb_dd2e7eb5.js" defer></script>
+    <script src="coverage_html_cb_15cffcd0.js" defer></script>
 </head>
 <body class="pyfile">
 <header>
@@ -64,8 +64,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="z_1ef9b076751c2c3b_us_census_shapefiles_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.15.2">coverage.py v7.15.2</a>,
-            created at 2026-07-30 07:15 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.16.2">coverage.py v7.16.2</a>,
+            created at 2026-10-16 20:33 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -81,7 +81,7 @@
 </header>
 <main id="source">
     <p class="pln"><span class="n"><a id="t1" href="#t1">1</a></span><span class="t"><span class="com"># Copyright (c) 2023 Darren Erik Vengroff</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t2" href="#t2">2</a></span><span class="t"><span class="str">"""Utilities for geometric operations."""</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t2" href="#t2">2</a></span><span class="t"><span class="str">&quot;&quot;&quot;Utilities for geometric operations.&quot;&quot;&quot;</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t3" href="#t3">3</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t4" href="#t4">4</a></span><span class="t"><span class="key">import</span> <span class="nam">math</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t5" href="#t5">5</a></span><span class="t"><span class="key">from</span> <span class="nam">typing</span> <span class="key">import</span> <span class="nam">Optional</span><span class="op">,</span> <span class="nam">TypeVar</span><span class="op">,</span> <span class="nam">Union</span>&nbsp;</span><span class="r"></span></p>
@@ -92,8 +92,8 @@
     <p class="pln"><span class="n"><a id="t10" href="#t10">10</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t11" href="#t11">11</a></span><span class="t"><span class="key">def</span> <span class="nam">isoperimetric_quotient</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t12" href="#t12">12</a></span><span class="t">    <span class="nam">geo</span><span class="op">:</span> <span class="nam">Union</span><span class="op">[</span><span class="nam">gpd</span><span class="op">.</span><span class="nam">GeoDataFrame</span><span class="op">,</span> <span class="nam">gpd</span><span class="op">.</span><span class="nam">GeoSeries</span><span class="op">,</span> <span class="nam">Polygon</span><span class="op">]</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t13" href="#t13">13</a></span><span class="t"><span class="op">)</span> <span class="op">-></span> <span class="nam">float</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t14" href="#t14">14</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t13" href="#t13">13</a></span><span class="t"><span class="op">)</span> <span class="op">-&gt;</span> <span class="nam">float</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t14" href="#t14">14</a></span><span class="t">    <span class="str">&quot;&quot;&quot;</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t15" href="#t15">15</a></span><span class="t"><span class="str">    Compute the isoperimetric quotient of a shape or collection of shapes.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t16" href="#t16">16</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t17" href="#t17">17</a></span><span class="t"><span class="str">    The isoperimetric quotient is a measure of the compactness of a polygom.</span>&nbsp;</span><span class="r"></span></p>
@@ -118,7 +118,7 @@
     <p class="pln"><span class="n"><a id="t36" href="#t36">36</a></span><span class="t"><span class="str">    -------</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t37" href="#t37">37</a></span><span class="t"><span class="str">        The isoperimetric_quotient (Polsby&#8211;Popper test) value or values</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t38" href="#t38">38</a></span><span class="t"><span class="str">        between 0 and 1.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t39" href="#t39">39</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t39" href="#t39">39</a></span><span class="t"><span class="str">    &quot;&quot;&quot;</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t40" href="#t40">40</a></span><span class="t">    <span class="nam">area</span> <span class="op">=</span> <span class="nam">geo</span><span class="op">.</span><span class="nam">area</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t41" href="#t41">41</a></span><span class="t">    <span class="nam">length</span> <span class="op">=</span> <span class="nam">geo</span><span class="op">.</span><span class="nam">exterior</span><span class="op">.</span><span class="nam">length</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t42" href="#t42">42</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -129,8 +129,8 @@
     <p class="pln"><span class="n"><a id="t47" href="#t47">47</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t48" href="#t48">48</a></span><span class="t"><span class="key">def</span> <span class="nam">drop_polygon_if_sliver</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t49" href="#t49">49</a></span><span class="t">    <span class="nam">polygon</span><span class="op">:</span> <span class="nam">Polygon</span><span class="op">,</span> <span class="nam">threshold</span><span class="op">:</span> <span class="nam">float</span> <span class="op">=</span> <span class="num">0.01</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t50" href="#t50">50</a></span><span class="t"><span class="op">)</span> <span class="op">-></span> <span class="nam">Optional</span><span class="op">[</span><span class="nam">Polygon</span><span class="op">]</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t51" href="#t51">51</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t50" href="#t50">50</a></span><span class="t"><span class="op">)</span> <span class="op">-&gt;</span> <span class="nam">Optional</span><span class="op">[</span><span class="nam">Polygon</span><span class="op">]</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t51" href="#t51">51</a></span><span class="t">    <span class="str">&quot;&quot;&quot;</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t52" href="#t52">52</a></span><span class="t"><span class="str">    Drop a polygon if it is a sliver.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t53" href="#t53">53</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t54" href="#t54">54</a></span><span class="t"><span class="str">    Parameters</span>&nbsp;</span><span class="r"></span></p>
@@ -143,7 +143,7 @@
     <p class="pln"><span class="n"><a id="t61" href="#t61">61</a></span><span class="t"><span class="str">    Returns</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t62" href="#t62">62</a></span><span class="t"><span class="str">    -------</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t63" href="#t63">63</a></span><span class="t"><span class="str">        `polygon` if not a sliver or `None` if a sliver.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t64" href="#t64">64</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t64" href="#t64">64</a></span><span class="t"><span class="str">    &quot;&quot;&quot;</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t65" href="#t65">65</a></span><span class="t">    <span class="key">if</span> <span class="nam">isoperimetric_quotient</span><span class="op">(</span><span class="nam">polygon</span><span class="op">)</span> <span class="op">&lt;</span> <span class="nam">threshold</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t66" href="#t66">66</a></span><span class="t">        <span class="key">return</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t67" href="#t67">67</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -152,8 +152,8 @@
     <p class="pln"><span class="n"><a id="t70" href="#t70">70</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t71" href="#t71">71</a></span><span class="t"><span class="key">def</span> <span class="nam">drop_slivers_multi_polygon</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t72" href="#t72">72</a></span><span class="t">    <span class="nam">multi_polygon</span><span class="op">:</span> <span class="nam">Union</span><span class="op">[</span><span class="nam">Polygon</span><span class="op">,</span> <span class="nam">MultiPolygon</span><span class="op">]</span><span class="op">,</span> <span class="nam">threshold</span><span class="op">:</span> <span class="nam">float</span> <span class="op">=</span> <span class="num">0.01</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t73" href="#t73">73</a></span><span class="t"><span class="op">)</span> <span class="op">-></span> <span class="nam">Optional</span><span class="op">[</span><span class="nam">Union</span><span class="op">[</span><span class="nam">Polygon</span><span class="op">,</span> <span class="nam">MultiPolygon</span><span class="op">]</span><span class="op">]</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t74" href="#t74">74</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t73" href="#t73">73</a></span><span class="t"><span class="op">)</span> <span class="op">-&gt;</span> <span class="nam">Optional</span><span class="op">[</span><span class="nam">Union</span><span class="op">[</span><span class="nam">Polygon</span><span class="op">,</span> <span class="nam">MultiPolygon</span><span class="op">]</span><span class="op">]</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t74" href="#t74">74</a></span><span class="t">    <span class="str">&quot;&quot;&quot;</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t75" href="#t75">75</a></span><span class="t"><span class="str">    Drop all the sliver polygons from a multi-polygon.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t76" href="#t76">76</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t77" href="#t77">77</a></span><span class="t"><span class="str">    Parameters</span>&nbsp;</span><span class="r"></span></p>
@@ -167,12 +167,12 @@
     <p class="pln"><span class="n"><a id="t85" href="#t85">85</a></span><span class="t"><span class="str">    Returns</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t86" href="#t86">86</a></span><span class="t"><span class="str">    -------</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t87" href="#t87">87</a></span><span class="t"><span class="str">        A shape (either a `Polygon` or `MultiPolygon` containing all non-sliver</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t88" href="#t88">88</a></span><span class="t"><span class="str">        polygones. If there aren't any, `None` is returned.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t89" href="#t89">89</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t88" href="#t88">88</a></span><span class="t"><span class="str">        polygones. If there aren&#x27;t any, `None` is returned.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t89" href="#t89">89</a></span><span class="t"><span class="str">    &quot;&quot;&quot;</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t90" href="#t90">90</a></span><span class="t">    <span class="nam">remaining_polygons</span> <span class="op">=</span> <span class="op">[</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t91" href="#t91">91</a></span><span class="t">        <span class="nam">poly</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t92" href="#t92">92</a></span><span class="t">        <span class="key">for</span> <span class="nam">poly</span> <span class="key">in</span> <span class="nam">multi_polygon</span><span class="op">.</span><span class="nam">geoms</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t93" href="#t93">93</a></span><span class="t">        <span class="key">if</span> <span class="nam">isoperimetric_quotient</span><span class="op">(</span><span class="nam">poly</span><span class="op">)</span> <span class="op">>=</span> <span class="nam">threshold</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t93" href="#t93">93</a></span><span class="t">        <span class="key">if</span> <span class="nam">isoperimetric_quotient</span><span class="op">(</span><span class="nam">poly</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="nam">threshold</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t94" href="#t94">94</a></span><span class="t">    <span class="op">]</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t95" href="#t95">95</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t96" href="#t96">96</a></span><span class="t">    <span class="key">if</span> <span class="nam">len</span><span class="op">(</span><span class="nam">remaining_polygons</span><span class="op">)</span> <span class="op">==</span> <span class="num">0</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -185,8 +185,8 @@
     <p class="pln"><span class="n"><a id="t103" href="#t103">103</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t104" href="#t104">104</a></span><span class="t"><span class="key">def</span> <span class="nam">drop_slivers_from_geo_series</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t105" href="#t105">105</a></span><span class="t">    <span class="nam">gs_geo</span><span class="op">:</span> <span class="nam">gpd</span><span class="op">.</span><span class="nam">GeoSeries</span><span class="op">,</span> <span class="nam">threshold</span><span class="op">:</span> <span class="nam">float</span> <span class="op">=</span> <span class="num">0.01</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t106" href="#t106">106</a></span><span class="t"><span class="op">)</span> <span class="op">-></span> <span class="nam">gpd</span><span class="op">.</span><span class="nam">GeoSeries</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t107" href="#t107">107</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t106" href="#t106">106</a></span><span class="t"><span class="op">)</span> <span class="op">-&gt;</span> <span class="nam">gpd</span><span class="op">.</span><span class="nam">GeoSeries</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t107" href="#t107">107</a></span><span class="t">    <span class="str">&quot;&quot;&quot;</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t108" href="#t108">108</a></span><span class="t"><span class="str">    Drop all slivers from the geometries in a `GeoSeries`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t109" href="#t109">109</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t110" href="#t110">110</a></span><span class="t"><span class="str">    Parameters</span>&nbsp;</span><span class="r"></span></p>
@@ -199,7 +199,7 @@
     <p class="pln"><span class="n"><a id="t117" href="#t117">117</a></span><span class="t"><span class="str">    Returns</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t118" href="#t118">118</a></span><span class="t"><span class="str">    -------</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t119" href="#t119">119</a></span><span class="t"><span class="str">        The series with all slivers removed.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t120" href="#t120">120</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t120" href="#t120">120</a></span><span class="t"><span class="str">    &quot;&quot;&quot;</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t121" href="#t121">121</a></span><span class="t">    <span class="key">return</span> <span class="nam">gs_geo</span><span class="op">.</span><span class="nam">map</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t122" href="#t122">122</a></span><span class="t">        <span class="key">lambda</span> <span class="nam">s</span><span class="op">:</span> <span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t123" href="#t123">123</a></span><span class="t">            <span class="nam">drop_slivers_multi_polygon</span><span class="op">(</span><span class="nam">s</span><span class="op">,</span> <span class="nam">threshold</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -213,8 +213,8 @@
     <p class="pln"><span class="n"><a id="t131" href="#t131">131</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t132" href="#t132">132</a></span><span class="t"><span class="key">def</span> <span class="nam">drop_slivers_from_gdf</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t133" href="#t133">133</a></span><span class="t">    <span class="nam">gdf_geo</span><span class="op">:</span> <span class="nam">gpd</span><span class="op">.</span><span class="nam">GeoDataFrame</span><span class="op">,</span> <span class="nam">threshold</span><span class="op">:</span> <span class="nam">float</span> <span class="op">=</span> <span class="num">0.01</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t134" href="#t134">134</a></span><span class="t"><span class="op">)</span> <span class="op">-></span> <span class="nam">gpd</span><span class="op">.</span><span class="nam">GeoDataFrame</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t135" href="#t135">135</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t134" href="#t134">134</a></span><span class="t"><span class="op">)</span> <span class="op">-&gt;</span> <span class="nam">gpd</span><span class="op">.</span><span class="nam">GeoDataFrame</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t135" href="#t135">135</a></span><span class="t">    <span class="str">&quot;&quot;&quot;</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t136" href="#t136">136</a></span><span class="t"><span class="str">    Drop all slivers from the geometries in a `GeoDataFrame`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t137" href="#t137">137</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t138" href="#t138">138</a></span><span class="t"><span class="str">    Parameters</span>&nbsp;</span><span class="r"></span></p>
@@ -227,7 +227,7 @@
     <p class="pln"><span class="n"><a id="t145" href="#t145">145</a></span><span class="t"><span class="str">    Returns</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t146" href="#t146">146</a></span><span class="t"><span class="str">    -------</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t147" href="#t147">147</a></span><span class="t"><span class="str">        The geo data frame with all slivers removed.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t148" href="#t148">148</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t148" href="#t148">148</a></span><span class="t"><span class="str">    &quot;&quot;&quot;</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t149" href="#t149">149</a></span><span class="t">    <span class="nam">new_geometry</span> <span class="op">=</span> <span class="nam">drop_slivers_from_geo_series</span><span class="op">(</span><span class="nam">gdf_geo</span><span class="op">.</span><span class="nam">geometry</span><span class="op">,</span> <span class="nam">threshold</span><span class="op">=</span><span class="nam">threshold</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t150" href="#t150">150</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t151" href="#t151">151</a></span><span class="t">    <span class="nam">gdf_result</span> <span class="op">=</span> <span class="nam">gpd</span><span class="op">.</span><span class="nam">GeoDataFrame</span><span class="op">(</span><span class="nam">gdf_geo</span><span class="op">,</span> <span class="nam">geometry</span><span class="op">=</span><span class="nam">new_geometry</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -235,14 +235,14 @@
     <p class="run"><span class="n"><a id="t153" href="#t153">153</a></span><span class="t">    <span class="key">return</span> <span class="nam">gdf_result</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t154" href="#t154">154</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t155" href="#t155">155</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t156" href="#t156">156</a></span><span class="t"><span class="nam">T</span> <span class="op">=</span> <span class="nam">TypeVar</span><span class="op">(</span><span class="str">"T"</span><span class="op">,</span> <span class="nam">Polygon</span><span class="op">,</span> <span class="nam">MultiPolygon</span><span class="op">,</span> <span class="nam">gpd</span><span class="op">.</span><span class="nam">GeoSeries</span><span class="op">,</span> <span class="nam">gpd</span><span class="op">.</span><span class="nam">GeoDataFrame</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t156" href="#t156">156</a></span><span class="t"><span class="nam">T</span> <span class="op">=</span> <span class="nam">TypeVar</span><span class="op">(</span><span class="str">&quot;T&quot;</span><span class="op">,</span> <span class="nam">Polygon</span><span class="op">,</span> <span class="nam">MultiPolygon</span><span class="op">,</span> <span class="nam">gpd</span><span class="op">.</span><span class="nam">GeoSeries</span><span class="op">,</span> <span class="nam">gpd</span><span class="op">.</span><span class="nam">GeoDataFrame</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t157" href="#t157">157</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t158" href="#t158">158</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t159" href="#t159">159</a></span><span class="t"><span class="key">def</span> <span class="nam">drop_slivers</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t160" href="#t160">160</a></span><span class="t">    <span class="nam">geo</span><span class="op">:</span> <span class="nam">T</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t161" href="#t161">161</a></span><span class="t">    <span class="nam">threshold</span><span class="op">:</span> <span class="nam">float</span> <span class="op">=</span> <span class="num">0.01</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t162" href="#t162">162</a></span><span class="t"><span class="op">)</span> <span class="op">-></span> <span class="nam">Union</span><span class="op">[</span><span class="key">None</span><span class="op">,</span> <span class="nam">T</span><span class="op">]</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t163" href="#t163">163</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t162" href="#t162">162</a></span><span class="t"><span class="op">)</span> <span class="op">-&gt;</span> <span class="nam">Union</span><span class="op">[</span><span class="key">None</span><span class="op">,</span> <span class="nam">T</span><span class="op">]</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t163" href="#t163">163</a></span><span class="t">    <span class="str">&quot;&quot;&quot;</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t164" href="#t164">164</a></span><span class="t"><span class="str">    Drop slivers from an arbitrary geometry or collection of geometries.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t165" href="#t165">165</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t166" href="#t166">166</a></span><span class="t"><span class="str">    Accepts `MultiPolygon`, `Polygon`, `gpd.GeoSeries` or `gpd.GeoDataFrame`</span>&nbsp;</span><span class="r"></span></p>
@@ -257,7 +257,7 @@
     <p class="pln"><span class="n"><a id="t175" href="#t175">175</a></span><span class="t"><span class="str">    Returns</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t176" href="#t176">176</a></span><span class="t"><span class="str">    -------</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t177" href="#t177">177</a></span><span class="t"><span class="str">        The geometry with slivers dropped.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t178" href="#t178">178</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t178" href="#t178">178</a></span><span class="t"><span class="str">    &quot;&quot;&quot;</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t179" href="#t179">179</a></span><span class="t">    <span class="key">if</span> <span class="nam">isinstance</span><span class="op">(</span><span class="nam">geo</span><span class="op">,</span> <span class="nam">MultiPolygon</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t180" href="#t180">180</a></span><span class="t">        <span class="key">return</span> <span class="nam">drop_slivers_multi_polygon</span><span class="op">(</span><span class="nam">geo</span><span class="op">,</span> <span class="nam">threshold</span><span class="op">=</span><span class="nam">threshold</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t181" href="#t181">181</a></span><span class="t">    <span class="key">elif</span> <span class="nam">isinstance</span><span class="op">(</span><span class="nam">geo</span><span class="op">,</span> <span class="nam">Polygon</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -268,8 +268,8 @@
     <p class="run"><span class="n"><a id="t186" href="#t186">186</a></span><span class="t">        <span class="key">return</span> <span class="nam">drop_slivers_from_gdf</span><span class="op">(</span><span class="nam">geo</span><span class="op">,</span> <span class="nam">threshold</span><span class="op">=</span><span class="nam">threshold</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t187" href="#t187">187</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t188" href="#t188">188</a></span><span class="t">    <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis mis2 show_mis"><span class="n"><a id="t189" href="#t189">189</a></span><span class="t">        <span class="fst">f"</span><span class="fst">Unable to drop slivers from a </span><span class="op">{</span><span class="nam">type</span><span class="op">(</span><span class="nam">geo</span><span class="op">)</span><span class="op">}</span><span class="fst">. </span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis mis2 show_mis"><span class="n"><a id="t190" href="#t190">190</a></span><span class="t">        <span class="str">"Must be a GeoDataFrame, GeoSeries, and MultiPolygones only."</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis mis2 show_mis"><span class="n"><a id="t189" href="#t189">189</a></span><span class="t">        <span class="fst">f&quot;</span><span class="fst">Unable to drop slivers from a </span><span class="op">{</span><span class="nam">type</span><span class="op">(</span><span class="nam">geo</span><span class="op">)</span><span class="op">}</span><span class="fst">. </span><span class="fst">&quot;</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis mis2 show_mis"><span class="n"><a id="t190" href="#t190">190</a></span><span class="t">        <span class="str">&quot;Must be a GeoDataFrame, GeoSeries, and MultiPolygones only.&quot;</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis mis2 show_mis"><span class="n"><a id="t191" href="#t191">191</a></span><span class="t">    <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
@@ -279,8 +279,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="z_1ef9b076751c2c3b_us_census_shapefiles_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.15.2">coverage.py v7.15.2</a>,
-            created at 2026-07-30 07:15 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.16.2">coverage.py v7.16.2</a>,
+            created at 2026-10-16 20:33 +0000
         </p>
     </div>
 </footer>
