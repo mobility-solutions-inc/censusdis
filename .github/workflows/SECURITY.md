@@ -8,6 +8,8 @@ automation:
 - Jobs that use repository secrets run only from
   `mobility-solutions-inc/censusdis` on `refs/heads/main` and target the
   `main-secrets` environment.
+- The `main-test` workflow runs tests with `US_CENSUS_API_KEY` from that
+  environment and fails if the key is missing. It does not publish reports.
 - The CodeArtifact publish job targets the `aws-codeartifact` environment and
   receives short-lived AWS credentials through GitHub OIDC.
 - Both environments must use a selected deployment branch policy that permits
