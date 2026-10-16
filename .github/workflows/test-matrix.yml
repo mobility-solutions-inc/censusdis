@@ -3,7 +3,6 @@
 #
 # See also:
 #    unit-test.yml: run on a single platform every time a branch is pushed
-#    coverage-report.yml: runs on merge to main to generate coverage reports
 
 name: test-matrix
 
