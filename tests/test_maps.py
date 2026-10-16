@@ -159,6 +159,29 @@ class MapPlotTestCase(unittest.TestCase):
         self.gdf = gdf[gdf.STATEFP.isin(ALL_STATES_DC_AND_PR)]
 
         plt.rcParams["figure.figsize"] = (8, 5)
+        self.addCleanup(plt.close, "all")
+
+        # Keep Contextily's tile decoding, mosaicing, and reprojection in the
+        # image tests, but do not depend on live OpenStreetMap tile servers.
+        self.tile_bytes = (
+            Path(__file__).parent / "data" / "basemap_tile.png"
+        ).read_bytes()
+        tile_request = patch(
+            "contextily.tile.requests.get", side_effect=self._tile_response
+        )
+        tile_request.start()
+        self.addCleanup(tile_request.stop)
+
+    def _tile_response(self, url, **kwargs):
+        """Serve the local tile only for requests to the expected map provider."""
+        self.assertRegex(
+            url, r"^https://(?:[abc]\.)?tile\.openstreetmap\.org/\d+/\d+/\d+\.png$"
+        )
+        response = requests.Response()
+        response.status_code = 200
+        response.url = url
+        response._content = self.tile_bytes
+        return response
 
     def test_closest_epsg(self):
         """Test finding the right epsg to plot each of several states."""
