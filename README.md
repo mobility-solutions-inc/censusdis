@@ -11,8 +11,6 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/censusdis?label=PyPI%20Downloads)
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/vengroff/censusdis)
-![Tests Badge](https://github.com/vengroff/censusdis/raw/main/reports/junit/tests-badge.svg)
-![Coverage Badge](https://github.com/vengroff/censusdis/raw/main/reports/coverage/coverage-badge.svg)
 [![Documentation Status](https://readthedocs.org/projects/censusdis/badge/?version=latest)](https://censusdis.readthedocs.io/en/latest/?badge=latest)
 
 censusdis is a package for discovering, loading, and analyzing U.S. Census data. 

@@ -3,7 +3,6 @@
 #
 # See also:
 #    test-matrix.yml: run on all platforms for each pull request
-#    coverage-report.yml: runs on merge to main to generate coverage reports
 
 name: unit-test
 
