@@ -42,7 +42,10 @@ dependencies = [
     "numpy>=2.0.0,<3.0.0",
     # Deal with a certificate issue. See
     # https://uscensusbureau.slack.com/archives/CC7DYQ8PM/p1752773503093109
-    "certifi==2026.7.22",
+    # 2026.10.19 removes the distrusted "emSign ECC Root CA - G3" root
+    # (eMudhra G3B/G3C intermediates with crackable keys, Mozilla bug 2083449).
+    # Use a floor rather than an exact pin so future trust-store removals flow in.
+    "certifi>=2026.10.19",
 ]
 
 [project.optional-dependencies]
