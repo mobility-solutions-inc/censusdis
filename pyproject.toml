@@ -42,7 +42,7 @@ dependencies = [
     "numpy>=2.0.0,<3.0.0",
     # Deal with a certificate issue. See
     # https://uscensusbureau.slack.com/archives/CC7DYQ8PM/p1752773503093109
-    "certifi==2026.7.22",
+    "certifi==2026.10.19",
 ]
 
 [project.optional-dependencies]
