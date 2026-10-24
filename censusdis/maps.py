@@ -27,6 +27,7 @@ from shapely.geometry.base import BaseGeometry
 
 from censusdis.impl.exceptions import CensusApiException
 from censusdis.impl.fetch import certificates
+from censusdis.impl.http import get as http_get
 from censusdis.states import AK, HI, NAMES_FROM_IDS, PR
 
 logger = getLogger(__name__)
@@ -50,7 +51,7 @@ def _download_with_retries(
     """Download a shapefile, retrying transient Census server failures."""
     for attempt in range(_SHAPEFILE_DOWNLOAD_RETRIES + 1):
         try:
-            response = requests.get(
+            response = http_get(
                 url,
                 timeout=timeout,
                 cert=cert,
