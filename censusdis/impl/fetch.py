@@ -9,6 +9,7 @@ import pandas as pd
 import requests
 
 from censusdis.impl.exceptions import CensusApiException
+from censusdis.impl.http import get as http_get
 
 logger = getLogger(__name__)
 
@@ -168,7 +169,7 @@ def json_from_url(url: str, params: Optional[Mapping[str, str]] = None) -> Any:
     """Get json from a URL."""
     for attempt in range(_DATA_DOWNLOAD_RETRIES + 1):
         try:
-            request = requests.get(
+            request = http_get(
                 url,
                 params=params,
                 cert=certificates.data_cert,

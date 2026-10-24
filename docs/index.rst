@@ -73,6 +73,7 @@ Notebooks <./notebooks.html>`_ section.
    intro.rst
    notebooks.rst
    api.rst
+   security.rst
 
 Indices and Tables
 ==================

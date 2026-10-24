@@ -31,6 +31,7 @@ import censusdis.maps as cmap
 from censusdis.datasets import ACS5, DECENNIAL_PUBLIC_LAW_94_171
 from censusdis.impl.exceptions import CensusApiException
 from censusdis.impl.fetch import data_from_url
+from censusdis.impl.http import get as http_get
 from censusdis.impl.us_census_shapefiles import (
     add_geography,
     clip_water,
@@ -480,14 +481,14 @@ def download_lodes(
 
     logger.info(f"Downloading LODES data from {url}")
 
-    results = requests.get(url)
+    results = http_get(url)
     if results.status_code != requests.status_codes.codes.OK:
         raise CensusApiException(
             f"Unable to get LODES data. Attempted to fetch from {url}. "
             f"Status: {results.status_code}; {results.reason}"
         )
 
-    gz_content = requests.get(url).content
+    gz_content = results.content
     content = gzip.decompress(gz_content)
     df_lodes = pd.read_csv(
         io.StringIO(content.decode("utf-8")), dtype={"w_geocode": str, "h_geocode": str}
