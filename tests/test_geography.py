@@ -3,9 +3,87 @@
 
 import unittest
 from typing import Mapping, Optional, Tuple
+from unittest.mock import Mock, call, patch
 
+from censusdis import CensusApiException
 from censusdis.datasets import LODES_OD_MAIN_JT00
-from censusdis.geography import CensusGeographyQuerySpec, PathSpec
+from censusdis.geography import CensusGeographyQuerySpec, GeoException, PathSpec
+from censusdis.impl.fetch import certificates
+
+
+class PathSpecFetchTestCase(unittest.TestCase):
+    """Test geography metadata downloads without relying on Census availability."""
+
+    @patch("censusdis.impl.fetch.sleep")
+    @patch("censusdis.impl.fetch.requests.get")
+    def test_retries_transient_unavailability(self, requests_get, sleep):
+        """Recover geography metadata after transient Census 503 responses."""
+        for year, level_key in [(2009, "geoLevelDisplay"), (2013, "geoLevelId")]:
+            with self.subTest(year=year):
+                requests_get.reset_mock()
+                sleep.reset_mock()
+                unavailable = Mock(status_code=503)
+                success = Mock(status_code=200)
+                success.json.return_value = {
+                    "fips": [
+                        {
+                            level_key: "150",
+                            "requires": ["state", "county", "tract"],
+                            "name": "block group",
+                        }
+                    ]
+                }
+                requests_get.side_effect = [unavailable] * 3 + [success]
+
+                with certificates.use(data_verify="bundle.pem", data_cert="cert.pem"):
+                    specs = PathSpec._fetch_path_specs("acs/acs5", year)
+
+                self.assertEqual(
+                    ["state", "county", "tract", "block group"], specs["150"].path
+                )
+                self.assertEqual(4, requests_get.call_count)
+                self.assertEqual([call(1), call(2), call(4)], sleep.call_args_list)
+                self.assertEqual(
+                    f"https://api.census.gov/data/{year}/acs/acs5/geography.json",
+                    requests_get.call_args.args[0],
+                )
+                kwargs = requests_get.call_args.kwargs
+                self.assertEqual(120, kwargs["timeout"])
+                self.assertEqual("bundle.pem", kwargs["verify"])
+                self.assertEqual("cert.pem", kwargs["cert"])
+
+    @patch("censusdis.impl.fetch.sleep")
+    @patch("censusdis.impl.fetch.requests.get")
+    def test_reports_persistent_unavailability(self, requests_get, sleep):
+        """Keep persistent service failures visible as geography errors."""
+        requests_get.return_value = Mock(
+            status_code=503,
+            url="https://api.census.gov/data/2013/acs/acs5/geography.json",
+            text="Sorry, the system is currently undergoing maintenance or is busy.",
+        )
+
+        with self.assertRaisesRegex(GeoException, "status 503.*maintenance") as exc:
+            PathSpec._fetch_path_specs("acs/acs5", 2013)
+
+        self.assertIsInstance(exc.exception.__cause__, CensusApiException)
+        self.assertEqual(4, requests_get.call_count)
+        self.assertEqual([call(1), call(2), call(4)], sleep.call_args_list)
+
+    @patch("censusdis.impl.fetch.sleep")
+    @patch("censusdis.impl.fetch.requests.get")
+    def test_does_not_retry_missing_metadata(self, requests_get, sleep):
+        """Report permanent HTTP errors immediately."""
+        requests_get.return_value = Mock(
+            status_code=404,
+            url="https://api.census.gov/data/2013/acs/acs5/geography.json",
+            text="Not Found",
+        )
+
+        with self.assertRaisesRegex(GeoException, "status 404"):
+            PathSpec._fetch_path_specs("acs/acs5", 2013)
+
+        requests_get.assert_called_once()
+        sleep.assert_not_called()
 
 
 class CanonicalGeometryTestCase(unittest.TestCase):

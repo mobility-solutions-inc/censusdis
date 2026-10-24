@@ -19,8 +19,7 @@ from typing import (
 )
 
 from .impl.exceptions import CensusApiException
-from .impl.fetch import certificates
-from .impl.http import get as http_get
+from .impl.fetch import json_from_url
 
 InSpecType = Union[str, Iterable[str]]
 
@@ -194,33 +193,26 @@ class PathSpec:
     def _fetch_path_specs(dataset: str, year: int) -> Dict[str, "PathSpec"]:
         url = PathSpec._geo_url(dataset, year)
 
-        request = http_get(
-            url, cert=certificates.data_cert, verify=certificates.data_verify
-        )
+        try:
+            parsed_json = json_from_url(url)
+        except CensusApiException as exc:
+            raise GeoException(str(exc)) from exc
 
-        if request.status_code == 200:
-            parsed_json = request.json()
+        path_specs = {}
 
-            path_specs = {}
+        if "fips" in parsed_json:
+            for row in parsed_json["fips"]:
+                level = row.get("geoLevelId", None)
+                if level is None:
+                    level = row.get("geoLevelDisplay", None)
 
-            if "fips" in parsed_json:
-                for row in parsed_json["fips"]:
-                    level = row.get("geoLevelId", None)
-                    if level is None:
-                        level = row.get("geoLevelDisplay", None)
+                if level is not None:
+                    path = row.get("requires", [])
+                    path.append(row["name"])
 
-                    if level is not None:
-                        path = row.get("requires", [])
-                        path.append(row["name"])
+                    path_specs[level] = PathSpec(path, PathSpec.__init_key)
 
-                        path_specs[level] = PathSpec(path, PathSpec.__init_key)
-
-            return path_specs
-
-        # Do our best to tell the user something informative.
-        raise GeoException(
-            f"Census API request to {request.url} failed with status {request.status_code}. {request.text}"
-        )
+        return path_specs
 
     _PATH_SPECS_BY_DATASET_YEAR: DefaultDict[str, Dict[int, Dict[str, "PathSpec"]]] = (
         defaultdict(dict)
