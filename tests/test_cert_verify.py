@@ -219,7 +219,7 @@ class CertificateTestCase(unittest.TestCase):
 
     def test_no_verify(self):
         """Test without verification on either the data or the map."""
-        with ced.certificates.use(data_verify=False, map_verify=False):
+        with verify_requests_gets(self, data_verify=False, map_verify=False):
             self._download_and_assert()
 
 
