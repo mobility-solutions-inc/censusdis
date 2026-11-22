@@ -8,8 +8,9 @@ immediately around those calls.
 """
 
 import logging
-import os
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import geopandas as gpd
 import numpy as np
@@ -742,26 +743,18 @@ class SymbolicInsertTestCase(unittest.TestCase):
         )
 
     def test_insert_name_link(self):
-        """Test that we can insert symbolic name and reference link of datasets to datasets.py."""
-        file_path = os.path.realpath(__file__)
-        file_directory = os.path.dirname(file_path)
-        file_directory = file_directory.replace("tests", "censusdis")
-        os.chdir(file_directory)
+        """Generate and verify symbolic names and reference links from the live catalog."""
+        # The live catalog can change after the checked-in module was generated.
+        with TemporaryDirectory() as directory:
+            destination = Path(directory) / "datasets.py"
+            self.create_symbolic.write_file(destination)
+            generated = destination.read_text()
 
-        with open("datasets.py", "r") as file:
-            file_check = file.read()
-            for key in self.symbolic_names.keys():
-                value = self.symbolic_names[key]
-                if not key.startswith("DEC") and not key.startswith("PUBS"):
-                    self.assertTrue(key in file_check)
-                    self.assertTrue(value[0] in file_check)
-                    self.assertTrue(value[1] in file_check)
-                elif key.startswith("DEC") or key.startswith("PUBS"):
-                    self.assertTrue(value[0] in file_check)
-                    self.assertTrue(value[1] in file_check)
-                else:
-                    self.assertTrue(value[0] in file_check)
-                    self.assertTrue(value[1] in file_check)
+        self.assertTrue(self.symbolic_names)
+        for name, (dataset, url) in self.symbolic_names.items():
+            with self.subTest(name=name):
+                self.assertIn(f"\n{name} = {dataset}\n", generated)
+                self.assertIn(f"    {name}: {url},\n", generated)
 
     def test_use_symbolic_name(self):
         """Test that we can use symbolic name to download datasets."""
