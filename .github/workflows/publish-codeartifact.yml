@@ -14,7 +14,7 @@ env:
   CODEARTIFACT_DOMAIN: ontra
   CODEARTIFACT_DOMAIN_OWNER: "156551339589"
   CODEARTIFACT_REPOSITORY: python-wheels
-  UV_VERSION: 0.13.4
+  UV_VERSION: 0.13.9
 
 jobs:
   build:
@@ -43,10 +43,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
-          python-version: "3.12"
+          python-version: "3.15"
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
           version: ${{ env.UV_VERSION }}
           enable-cache: true
@@ -70,7 +70,7 @@ jobs:
         run: |
           set -euo pipefail
           wheel="$(find dist -maxdepth 1 -name 'ontra_censusdis-*-py3-none-any.whl' -print -quit)"
-          uv venv --python 3.12 .venv-wheel
+          uv venv --python 3.15 .venv-wheel
           uv pip install --python .venv-wheel/bin/python "$wheel"
           .venv-wheel/bin/python -c \
             "import censusdis; print(f'censusdis version: {censusdis.version}')"
@@ -105,7 +105,7 @@ jobs:
           path: dist
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
           version: ${{ env.UV_VERSION }}
 
