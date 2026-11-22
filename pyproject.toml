@@ -1,6 +1,6 @@
 [project]
 name = "ontra-censusdis"
-version = "1.6.2"
+version = "1.6.3"
 description = "US Census utilities for a variety of data loading, analysis, and mapping purposes."
 license = "LicenseRef-HL3-CL-ECO-EXTR-FFD-LAW-MIL-SV"
 license-files = ["LICENSE.md"]
